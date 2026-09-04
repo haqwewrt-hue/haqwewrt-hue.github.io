@@ -1,1 +1,129 @@
-index.html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시간의 기록소</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  color: white;
+  background: linear-gradient(135deg, #05051a, #15154d, #05051a);
+  background-size: 300% 300%;
+  animation: bg 10s infinite alternate;
+}
+
+@keyframes bg {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.card {
+  width: 90%;
+  max-width: 650px;
+  padding: 50px 30px;
+  text-align: center;
+  border-radius: 30px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+h1 {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.clock {
+  font-size: 60px;
+  font-weight: bold;
+  margin: 30px 0 10px;
+}
+
+#message {
+  min-height: 60px;
+  font-size: 18px;
+  margin: 30px 0;
+}
+
+button {
+  padding: 15px 30px;
+  border: 0;
+  border-radius: 30px;
+  background: #697cff;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px #697cff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h1>🌌 시간의 기록소</h1>
+
+  <p>지금 이 순간도 언젠가는 기억이 된다.</p>
+
+  <div class="clock" id="clock">00:00:00</div>
+
+  <div id="message">
+    버튼을 눌러봐 ✨
+  </div>
+
+  <button onclick="showMessage()">
+    ✨ 오늘의 메시지
+  </button>
+
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+
+  const time =
+    String(now.getHours()).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0") + ":" +
+    String(now.getSeconds()).padStart(2, "0");
+
+  document.getElementById("clock").textContent = time;
+}
+
+const messages = [
+  "오늘도 좋은 하루가 되길 바라! 🌟",
+  "지금 이 순간은 다시 돌아오지 않아. ✨",
+  "천천히 가도 괜찮아. 🌙",
+  "새로운 일이 곧 찾아올지도 몰라! 🚀",
+  "오늘의 기억을 소중히 간직해봐. 💫"
+];
+
+function showMessage() {
+  const random =
+    messages[Math.floor(Math.random() * messages.length)];
+
+  document.getElementById("message").textContent = random;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
