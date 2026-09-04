@@ -3,1777 +3,1442 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>시간의 기록소</title>
+<title>Mini Game Center</title>
 
 <style>
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  color: white;
+    min-height: 100vh;
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at 20% 20%, #263b70 0%, transparent 35%),
+        radial-gradient(circle at 80% 80%, #401d5d 0%, transparent 35%),
+        linear-gradient(135deg, #080b16, #11182b 50%, #090b15);
+    overflow-x: hidden;
+}
 
-  background:
-    radial-gradient(circle at 50% 20%, #27276e, #09091d 65%);
+/* 배경 움직임 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    background:
+        radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
+    background-size: 35px 35px;
+    animation: backgroundMove 20s linear infinite;
+    pointer-events: none;
+}
 
-  overflow-x: hidden;
+@keyframes backgroundMove {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(35px, 35px);
+    }
+}
+
+/* 공통 */
+button {
+    font-family: inherit;
+}
+
+.hidden {
+    display: none !important;
 }
 
 /* =========================
-   공통
+   HOME
 ========================= */
 
-.screen {
-  width: 100%;
-  min-height: 100vh;
-
-  display: none;
-
-  justify-content: center;
-  align-items: center;
-
-  padding: 30px 15px;
+#home {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 55px 25px;
 }
 
-.screen.active {
-  display: flex;
+.header {
+    text-align: center;
+    margin-bottom: 45px;
 }
 
-.container {
-  width: 100%;
-  max-width: 1100px;
-
-  text-align: center;
+.header h1 {
+    font-size: clamp(36px, 6vw, 70px);
+    font-weight: 900;
+    letter-spacing: -3px;
+    text-shadow:
+        0 0 15px rgba(100,160,255,.6),
+        0 0 35px rgba(100,100,255,.3);
 }
 
-h1 {
-  margin: 0 0 10px;
-
-  font-size: clamp(36px, 6vw, 65px);
-
-  text-shadow:
-    0 0 25px #697cff;
+.header p {
+    margin-top: 12px;
+    color: #aeb9d6;
+    font-size: 17px;
 }
-
-.subtitle {
-  color: #c7c7e8;
-  margin-bottom: 40px;
-}
-
-/* =========================
-   메인 메뉴
-========================= */
 
 .games {
-  display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(230px, 1fr));
-
-  gap: 22px;
-
-  width: 100%;
+    width: min(1100px, 100%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 22px;
 }
 
 .game-card {
-  min-height: 220px;
+    position: relative;
+    min-height: 220px;
+    padding: 30px;
+    border-radius: 25px;
+    background: rgba(20,27,48,.72);
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    overflow: hidden;
+    transition: .35s;
+}
 
-  padding: 30px 20px;
-
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 28px;
-
-  background:
-    rgba(255,255,255,.09);
-
-  border:
-    1px solid rgba(255,255,255,.16);
-
-  backdrop-filter: blur(15px);
-
-  cursor: pointer;
-
-  transition:
-    transform .25s,
-    background .25s,
-    box-shadow .25s;
+.game-card::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    right: -70px;
+    top: -70px;
+    background: rgba(90,130,255,.16);
+    filter: blur(5px);
 }
 
 .game-card:hover {
-  transform:
-    translateY(-10px)
-    scale(1.02);
-
-  background:
-    rgba(255,255,255,.15);
-
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.4),
-    0 0 30px rgba(105,124,255,.25);
+    transform: translateY(-10px);
+    border-color: rgba(130,170,255,.5);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.4),
+        0 0 30px rgba(80,130,255,.12);
 }
 
 .game-icon {
-  font-size: 70px;
-
-  margin-bottom: 15px;
+    font-size: 55px;
+    margin-bottom: 18px;
 }
 
 .game-card h2 {
-  margin: 5px 0;
-
-  font-size: 25px;
+    font-size: 25px;
+    margin-bottom: 8px;
 }
 
 .game-card p {
-  margin: 8px 0 0;
-
-  color: #bdbdd8;
+    color: #9faac4;
+    margin-bottom: 25px;
 }
 
+.play-btn {
+    border: none;
+    border-radius: 13px;
+    padding: 12px 22px;
+    color: white;
+    background: linear-gradient(135deg, #527dff, #7657ff);
+    cursor: pointer;
+    font-weight: bold;
+    transition: .2s;
+    box-shadow: 0 8px 25px rgba(70,100,255,.25);
+}
+
+.play-btn:hover {
+    transform: scale(1.05);
+}
+
+.coming {
+    opacity: .45;
+    cursor: default;
+}
 
 /* =========================
-   게임 화면
+   ROULETTE PAGE
 ========================= */
 
-.game-window {
-  width: 100%;
-  max-width: 1000px;
-
-  padding: 30px 20px 40px;
-
-  border-radius: 35px;
-
-  background:
-    rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.15);
-
-  backdrop-filter: blur(15px);
-
-  box-shadow:
-    0 30px 100px rgba(0,0,0,.6);
+#roulettePage {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    padding: 25px;
 }
 
-.back {
-  position: absolute;
-
-  top: 20px;
-  left: 20px;
-
-  padding: 10px 18px;
-
-  border: 0;
-  border-radius: 20px;
-
-  color: white;
-
-  background:
-    rgba(255,255,255,.12);
-
-  cursor: pointer;
-
-  font-size: 15px;
+.topbar {
+    width: min(1200px, 100%);
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
-.back:hover {
-  background:
-    rgba(255,255,255,.2);
+.back-btn {
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.07);
+    color: white;
+    padding: 11px 17px;
+    border-radius: 12px;
+    cursor: pointer;
 }
 
-
-/* =========================
-   룰렛
-========================= */
-
-.roulette-area {
-  position: relative;
-
-  width: min(85vw, 760px);
-
-  aspect-ratio: 1 / 1;
-
-  margin: 10px auto 20px;
+.back-btn:hover {
+    background: rgba(255,255,255,.14);
 }
 
-#roulette {
-  width: 100%;
-  height: 100%;
-
-  display: block;
+.topbar-title {
+    font-size: 23px;
+    font-weight: 800;
 }
 
+.roulette-layout {
+    width: min(1200px, 100%);
+    margin: 35px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 30px;
+}
 
-/* 화살표 */
+.roulette-box {
+    min-height: 700px;
+    border-radius: 30px;
+    background: rgba(13,18,34,.72);
+    border: 1px solid rgba(255,255,255,.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 90px rgba(0,0,0,.35);
+}
 
+/* 룰렛 영역 */
+.wheel-wrapper {
+    position: relative;
+    width: min(620px, 90vw);
+    aspect-ratio: 1;
+}
+
+/* 캔버스 */
+#wheelCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 실제 핀/포인터 */
 .pointer {
-  position: absolute;
-
-  left: 50%;
-  top: -5px;
-
-  width: 70px;
-  height: 125px;
-
-  transform:
-    translateX(-50%)
-    rotate(0deg);
-
-  transform-origin:
-    50% 10px;
-
-  z-index: 10;
-
-  filter:
-    drop-shadow(
-      0 5px 8px rgba(0,0,0,.6)
-    );
-
-  transition:
-    transform .08s cubic-bezier(.2,.8,.2,1);
+    position: absolute;
+    left: 50%;
+    top: -13px;
+    width: 0;
+    height: 0;
+    border-left: 19px solid transparent;
+    border-right: 19px solid transparent;
+    border-top: 44px solid #ffcc4d;
+    transform: translateX(-50%);
+    z-index: 10;
+    filter:
+        drop-shadow(0 5px 5px rgba(0,0,0,.55))
+        drop-shadow(0 0 8px rgba(255,190,40,.35));
+    transform-origin: 50% 0%;
 }
 
-.pointer::before {
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-  top: 0;
-
-  width: 30px;
-  height: 100px;
-
-  transform:
-    translateX(-50%);
-
-  background:
-    linear-gradient(
-      90deg,
-      #aaa,
-      white,
-      #ddd
-    );
-
-  clip-path:
-    polygon(
-      50% 0%,
-      100% 18%,
-      75% 100%,
-      50% 85%,
-      25% 100%,
-      0% 18%
-    );
-
-  border-radius: 7px;
+/* 핀 흔들림 */
+.pointer.hit {
+    animation: pointerHit .13s ease-out;
 }
 
-.pointer::after {
-  content: "";
+@keyframes pointerHit {
+    0% {
+        transform: translateX(-50%) rotate(0deg);
+    }
 
-  position: absolute;
+    35% {
+        transform: translateX(-50%) rotate(22deg);
+    }
 
-  left: 50%;
-  top: -7px;
+    70% {
+        transform: translateX(-50%) rotate(-14deg);
+    }
 
-  width: 24px;
-  height: 24px;
-
-  transform:
-    translateX(-50%);
-
-  border-radius: 50%;
-
-  background: white;
-
-  border:
-    4px solid #ccc;
-
-  box-shadow:
-    0 3px 8px rgba(0,0,0,.6);
+    100% {
+        transform: translateX(-50%) rotate(0deg);
+    }
 }
 
-
-/* 룰렛 설정 */
-
-.roulette-settings {
-  margin: 10px 0 15px;
+/* 가운데 원 */
+.center-glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 75px;
+    height: 75px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, #303d63 0%, #171d34 55%, #090d19 100%);
+    border: 5px solid #59688f;
+    box-shadow:
+        0 0 25px rgba(100,130,255,.35),
+        inset 0 0 20px rgba(0,0,0,.8);
+    z-index: 5;
 }
 
-.roulette-settings select {
-  padding: 10px 18px;
-
-  border-radius: 15px;
-
-  border: 1px solid #555;
-
-  background: #17172f;
-
-  color: white;
-
-  font-size: 16px;
+/* 오른쪽 설정 */
+.control-panel {
+    border-radius: 25px;
+    background: rgba(18,24,43,.82);
+    border: 1px solid rgba(255,255,255,.1);
+    padding: 25px;
+    box-shadow: 0 25px 70px rgba(0,0,0,.3);
 }
 
+.control-panel h2 {
+    margin-bottom: 22px;
+}
 
-/* 결과 */
+.control-group {
+    margin-bottom: 22px;
+}
+
+.control-group label {
+    display: block;
+    color: #9da9c5;
+    font-size: 14px;
+    margin-bottom: 9px;
+}
+
+.number-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.number-control button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: #293453;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.number-control button:hover {
+    background: #3a496f;
+}
+
+#slotCount {
+    width: 75px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 10px;
+    background: #11172a;
+    color: white;
+    font-size: 17px;
+}
+
+#labels {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.label-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.label-number {
+    width: 28px;
+    color: #7784a4;
+    font-size: 13px;
+}
+
+.label-row input {
+    min-width: 0;
+    flex: 1;
+    height: 37px;
+    padding: 0 10px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 9px;
+    background: #10162a;
+    color: white;
+    outline: none;
+}
+
+.label-row input:focus {
+    border-color: #617cff;
+}
+
+.spin-btn {
+    width: 100%;
+    height: 58px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 16px;
+    color: white;
+    background: linear-gradient(135deg, #5d7dff, #7c50ff);
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(90,90,255,.25);
+    transition: .2s;
+}
+
+.spin-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 35px rgba(90,90,255,.4);
+}
+
+.spin-btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    transform: none;
+}
 
 .result {
-  min-height: 60px;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  font-size: 27px;
-  font-weight: bold;
-
-  text-shadow:
-    0 0 15px #8fa0ff;
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 15px;
+    background: rgba(255,255,255,.05);
+    text-align: center;
+    min-height: 72px;
 }
 
-
-/* 버튼 */
-
-.main-button {
-  padding: 17px 45px;
-
-  border: 0;
-
-  border-radius: 40px;
-
-  color: white;
-
-  font-size: 18px;
-  font-weight: bold;
-
-  background:
-    linear-gradient(
-      135deg,
-      #697cff,
-      #8b5cff
-    );
-
-  cursor: pointer;
-
-  box-shadow:
-    0 8px 25px rgba(80,80,255,.35);
-
-  transition: .2s;
+.result small {
+    display: block;
+    color: #8490ae;
+    margin-bottom: 5px;
 }
 
-.main-button:hover {
-  transform:
-    scale(1.06);
-
-  box-shadow:
-    0 0 35px
-    rgba(105,124,255,.8);
+#resultText {
+    font-size: 24px;
+    font-weight: 900;
+    color: #ffdb68;
 }
 
-.main-button:active {
-  transform:
-    scale(.95);
+.status {
+    text-align: center;
+    color: #7e8ba8;
+    font-size: 13px;
+    margin-top: 15px;
 }
-
-.main-button:disabled {
-  opacity: .5;
-  cursor: not-allowed;
-}
-
-
-/* =========================
-   순발력 게임
-========================= */
-
-.reaction-box {
-  width: 100%;
-  max-width: 700px;
-
-  height: 400px;
-
-  margin: 30px auto;
-
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 30px;
-
-  background: #29294b;
-
-  cursor: pointer;
-
-  font-size: 35px;
-  font-weight: bold;
-
-  user-select: none;
-}
-
-.reaction-box.ready {
-  background: #8b2424;
-}
-
-.reaction-box.go {
-  background: #208d5c;
-
-  box-shadow:
-    0 0 60px
-    rgba(40,255,150,.4);
-}
-
-
-/* =========================
-   주사위
-========================= */
-
-.dice {
-  font-size: 180px;
-
-  margin: 40px 0;
-
-  filter:
-    drop-shadow(
-      0 15px 25px rgba(0,0,0,.5)
-    );
-
-  transition:
-    transform .2s;
-}
-
-.dice.rolling {
-  animation:
-    diceRoll .15s
-    infinite linear;
-}
-
-@keyframes diceRoll {
-
-  0% {
-    transform:
-      rotate(0deg)
-      scale(1);
-  }
-
-  50% {
-    transform:
-      rotate(180deg)
-      scale(1.15);
-  }
-
-  100% {
-    transform:
-      rotate(360deg)
-      scale(1);
-  }
-}
-
 
 /* 모바일 */
+@media (max-width: 900px) {
+    .roulette-layout {
+        grid-template-columns: 1fr;
+    }
 
-@media(max-width:600px) {
+    .roulette-box {
+        min-height: auto;
+        padding: 25px 10px;
+    }
 
-  .game-window {
-    padding:
-      25px 10px 35px;
-  }
+    .control-panel {
+        max-width: 620px;
+        width: 100%;
+        margin: auto;
+    }
+}
 
-  .pointer {
-    transform-origin:
-      50% 10px;
-  }
+@media (max-width: 500px) {
+    #roulettePage {
+        padding: 15px;
+    }
 
-  .reaction-box {
-    height: 300px;
-  }
+    .topbar-title {
+        font-size: 18px;
+    }
+
+    .roulette-box {
+        border-radius: 20px;
+    }
+
+    .control-panel {
+        padding: 18px;
+    }
 }
 </style>
 </head>
 
-
 <body>
 
-
 <!-- =========================
-     메인 화면
+     HOME
 ========================= -->
 
-<section id="home" class="screen active">
+<section id="home">
 
-  <div class="container">
-
-    <h1>🌌 시간의 기록소</h1>
-
-    <div class="subtitle">
-      오늘은 어떤 게임을 해볼까?
+    <div class="header">
+        <h1>MINI GAME CENTER</h1>
+        <p>원하는 게임을 선택해봐</p>
     </div>
-
 
     <div class="games">
 
-
-      <!-- 룰렛 -->
-
-      <div
-        class="game-card"
-        onclick="openGame('roulette')"
-      >
-
-        <div class="game-icon">
-          🎰
+        <div class="game-card">
+            <div class="game-icon">🎯</div>
+            <h2>긴장감 룰렛</h2>
+            <p>마지막 순간까지 결과를 알 수 없는 룰렛</p>
+            <button class="play-btn" onclick="openRoulette()">
+                PLAY
+            </button>
         </div>
 
-        <h2>
-          운명의 룰렛
-        </h2>
-
-        <p>
-          마지막 순간까지 결과를 알 수 없다
-        </p>
-
-      </div>
-
-
-      <!-- 순발력 -->
-
-      <div
-        class="game-card"
-        onclick="openGame('reaction')"
-      >
-
-        <div class="game-icon">
-          ⚡
+        <div class="game-card">
+            <div class="game-icon">🎲</div>
+            <h2>주사위</h2>
+            <p>주사위를 굴려 랜덤 숫자를 확인해봐</p>
+            <button class="play-btn coming">
+                COMING
+            </button>
         </div>
 
-        <h2>
-          순발력 테스트
-        </h2>
-
-        <p>
-          얼마나 빨리 반응할 수 있을까?
-        </p>
-
-      </div>
-
-
-      <!-- 주사위 -->
-
-      <div
-        class="game-card"
-        onclick="openGame('dice')"
-      >
-
-        <div class="game-icon">
-          🎲
+        <div class="game-card">
+            <div class="game-icon">🃏</div>
+            <h2>카드 뽑기</h2>
+            <p>랜덤으로 카드를 한 장 뽑아봐</p>
+            <button class="play-btn coming">
+                COMING
+            </button>
         </div>
 
-        <h2>
-          행운의 주사위
-        </h2>
-
-        <p>
-          오늘의 운을 시험해보자
-        </p>
-
-      </div>
-
-
-      <!-- 준비중 -->
-
-      <div
-        class="game-card"
-        onclick="comingSoon()"
-      >
-
-        <div class="game-icon">
-          ❓
+        <div class="game-card">
+            <div class="game-icon">⚡</div>
+            <h2>타깃 맞히기</h2>
+            <p>빠른 반응속도로 목표를 맞혀봐</p>
+            <button class="play-btn coming">
+                COMING
+            </button>
         </div>
-
-        <h2>
-          새로운 게임
-        </h2>
-
-        <p>
-          곧 추가 예정
-        </p>
-
-      </div>
 
     </div>
 
-  </div>
-
 </section>
-
 
 
 <!-- =========================
-     룰렛 화면
+     ROULETTE
 ========================= -->
 
-<section id="roulette" class="screen">
+<section id="roulettePage" class="hidden">
 
-  <button
-    class="back"
-    onclick="goHome()"
-  >
-    ← 게임 목록
-  </button>
+    <div class="topbar">
 
+        <button class="back-btn" onclick="goHome()">
+            ← 게임 선택
+        </button>
 
-  <div class="game-window">
+        <div class="topbar-title">
+            🎯 긴장감 룰렛
+        </div>
 
-    <h1>
-      🎰 운명의 룰렛
-    </h1>
-
-    <div class="subtitle">
-      점점 느려진다... 마지막에 어디에 걸릴까?
-    </div>
-
-
-    <div class="roulette-settings">
-
-      칸 수:
-
-      <select
-        id="slotSelect"
-        onchange="changeSlots()"
-      >
-
-        <option value="2">2칸</option>
-        <option value="4">4칸</option>
-        <option value="6">6칸</option>
-        <option value="8">8칸</option>
-        <option value="10">10칸</option>
-        <option value="12">12칸</option>
-        <option value="15">15칸</option>
-        <option value="20">20칸</option>
-        <option value="25">25칸</option>
-        <option value="30" selected>30칸</option>
-
-      </select>
+        <div style="width:80px;"></div>
 
     </div>
 
 
-    <div class="roulette-area">
+    <div class="roulette-layout">
 
-      <canvas id="rouletteCanvas"></canvas>
+        <!-- 룰렛 -->
+        <div class="roulette-box">
 
-      <div
-        id="pointer"
-        class="pointer"
-      ></div>
+            <div class="wheel-wrapper">
+
+                <canvas id="wheelCanvas"></canvas>
+
+                <div id="pointer" class="pointer"></div>
+
+                <div class="center-glow"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- 설정 -->
+        <div class="control-panel">
+
+            <h2>룰렛 설정</h2>
+
+            <div class="control-group">
+
+                <label>칸 수</label>
+
+                <div class="number-control">
+
+                    <button onclick="changeSlotCount(-1)">
+                        −
+                    </button>
+
+                    <input
+                        id="slotCount"
+                        type="number"
+                        min="2"
+                        max="30"
+                        value="8"
+                        onchange="setSlotCount()"
+                    >
+
+                    <button onclick="changeSlotCount(1)">
+                        ＋
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="control-group">
+
+                <label>칸 이름</label>
+
+                <div id="labels"></div>
+
+            </div>
+
+
+            <button
+                id="spinBtn"
+                class="spin-btn"
+                onclick="spinRoulette()"
+            >
+                🎯 돌리기
+            </button>
+
+
+            <div class="result">
+
+                <small>RESULT</small>
+
+                <div id="resultText">
+                    -
+                </div>
+
+            </div>
+
+            <div id="status" class="status">
+                준비 완료
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div
-      id="rouletteResult"
-      class="result"
-    >
-      버튼을 눌러 운명을 결정해봐...
-    </div>
-
-
-    <button
-      id="spinButton"
-      class="main-button"
-      onclick="spinRoulette()"
-    >
-      🎯 룰렛 돌리기
-    </button>
-
-  </div>
 
 </section>
-
-
-
-<!-- =========================
-     순발력 게임
-========================= -->
-
-<section id="reaction" class="screen">
-
-  <button
-    class="back"
-    onclick="goHome()"
-  >
-    ← 게임 목록
-  </button>
-
-
-  <div class="game-window">
-
-    <h1>
-      ⚡ 순발력 테스트
-    </h1>
-
-    <div class="subtitle">
-      초록색이 되는 순간 클릭!
-    </div>
-
-
-    <div
-      id="reactionBox"
-      class="reaction-box"
-      onclick="reactionClick()"
-    >
-      시작 버튼을 눌러줘
-    </div>
-
-
-    <div
-      id="reactionResult"
-      class="result"
-    >
-    </div>
-
-
-    <button
-      class="main-button"
-      onclick="startReaction()"
-    >
-      ⚡ 시작
-    </button>
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================
-     주사위 게임
-========================= -->
-
-<section id="dice" class="screen">
-
-  <button
-    class="back"
-    onclick="goHome()"
-  >
-    ← 게임 목록
-  </button>
-
-
-  <div class="game-window">
-
-    <h1>
-      🎲 행운의 주사위
-    </h1>
-
-    <div class="subtitle">
-      오늘의 숫자는?
-    </div>
-
-
-    <div
-      id="dice"
-      class="dice"
-    >
-      🎲
-    </div>
-
-
-    <div
-      id="diceResult"
-      class="result"
-    >
-      주사위를 굴려보자!
-    </div>
-
-
-    <button
-      class="main-button"
-      onclick="rollDice()"
-    >
-      🎲 굴리기
-    </button>
-
-  </div>
-
-</section>
-
 
 
 <script>
 
-/* ==================================================
-   화면 이동
-================================================== */
+/* =========================
+   기본 설정
+========================= */
 
-function openGame(game) {
+const home = document.getElementById("home");
+const roulettePage = document.getElementById("roulettePage");
 
-  document
-    .querySelectorAll(".screen")
-    .forEach(screen => {
-      screen.classList.remove("active");
-    });
+const canvas = document.getElementById("wheelCanvas");
+const ctx = canvas.getContext("2d");
 
-  document
-    .getElementById(game)
-    .classList.add("active");
+const pointer = document.getElementById("pointer");
+
+const slotCountInput = document.getElementById("slotCount");
+const labelsContainer = document.getElementById("labels");
+
+const spinButton = document.getElementById("spinBtn");
+const resultText = document.getElementById("resultText");
+const statusText = document.getElementById("status");
+
+let slotCount = 8;
+
+let labels = [];
+
+let currentRotation = 0;
+
+let spinning = false;
+
+let animationFrame = null;
+
+let lastBoundary = null;
+
+
+/* =========================
+   페이지 이동
+========================= */
+
+function openRoulette() {
+
+    home.classList.add("hidden");
+    roulettePage.classList.remove("hidden");
+
+    resizeCanvas();
+
+    createLabels();
+
+    drawWheel();
 
 }
 
 
 function goHome() {
 
-  document
-    .querySelectorAll(".screen")
-    .forEach(screen => {
-      screen.classList.remove("active");
-    });
-
-  document
-    .getElementById("home")
-    .classList.add("active");
+    roulettePage.classList.add("hidden");
+    home.classList.remove("hidden");
 
 }
 
 
+/* =========================
+   캔버스 크기
+========================= */
 
-/* ==================================================
-   룰렛
-================================================== */
+function resizeCanvas() {
 
-const canvas =
-  document.getElementById(
-    "rouletteCanvas"
-  );
+    const rect = canvas.getBoundingClientRect();
 
-const ctx =
-  canvas.getContext("2d");
+    const size = Math.min(
+        rect.width || 600,
+        rect.height || 600
+    );
 
-const pointer =
-  document.getElementById(
-    "pointer"
-  );
+    const dpr = window.devicePixelRatio || 1;
 
-const rouletteResult =
-  document.getElementById(
-    "rouletteResult"
-  );
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
 
-const spinButton =
-  document.getElementById(
-    "spinButton"
-  );
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
 
-const slotSelect =
-  document.getElementById(
-    "slotSelect"
-  );
+    drawWheel();
 
-
-let SLOT_COUNT = 30;
-
-let rotation = 0;
-
-let velocity = 0;
-
-let spinning = false;
-
-let lastTime = 0;
-
-let lastPeg = -1;
-
-
-/* 색상 */
-
-const rouletteColors = [
-  "#f57676",
-  "#3db98b",
-  "#3383c3",
-  "#ffbd55"
-];
-
-
-/* 캔버스 */
-
-function resizeRoulette() {
-
-  const size =
-    canvas.clientWidth;
-
-  const dpr =
-    window.devicePixelRatio || 1;
-
-  canvas.width =
-    size * dpr;
-
-  canvas.height =
-    size * dpr;
-
-  ctx.setTransform(
-    dpr,
-    0,
-    0,
-    dpr,
-    0,
-    0
-  );
-
-  drawRoulette();
 }
 
 
-window.addEventListener(
-  "resize",
-  resizeRoulette
-);
+/* =========================
+   슬롯 생성
+========================= */
+
+function createLabels() {
+
+    labelsContainer.innerHTML = "";
+
+    labels = [];
+
+    for (let i = 0; i < slotCount; i++) {
+
+        labels.push(
+            "선택 " + (i + 1)
+        );
+
+        const row = document.createElement("div");
+
+        row.className = "label-row";
+
+        row.innerHTML = `
+            <span class="label-number">
+                ${i + 1}
+            </span>
+
+            <input
+                type="text"
+                value="선택 ${i + 1}"
+                data-index="${i}"
+                maxlength="20"
+            >
+        `;
+
+        labelsContainer.appendChild(row);
+
+    }
+
+    labelsContainer
+        .querySelectorAll("input")
+        .forEach(input => {
+
+            input.addEventListener(
+                "input",
+                function() {
+
+                    labels[
+                        Number(this.dataset.index)
+                    ] = this.value || "선택";
+
+                    drawWheel();
+
+                }
+            );
+
+        });
+
+}
 
 
-/* 룰렛 그리기 */
+/* =========================
+   칸 수 변경
+========================= */
 
-function drawRoulette() {
+function changeSlotCount(amount) {
 
-  const size =
-    canvas.clientWidth;
+    if (spinning) return;
 
-  const cx =
-    size / 2;
+    let value =
+        Number(slotCountInput.value) + amount;
 
-  const cy =
-    size / 2;
-
-  const radius =
-    size * .42;
-
-  ctx.clearRect(
-    0,
-    0,
-    size,
-    size
-  );
-
-
-  /* 그림자 */
-
-  ctx.save();
-
-  ctx.beginPath();
-
-  ctx.arc(
-    cx,
-    cy,
-    radius + 22,
-    0,
-    Math.PI * 2
-  );
-
-  ctx.shadowColor =
-    "rgba(0,0,0,.7)";
-
-  ctx.shadowBlur = 35;
-
-  ctx.fillStyle = "#222";
-
-  ctx.fill();
-
-  ctx.restore();
-
-
-  /* 외곽 금색 */
-
-  const gold =
-    ctx.createRadialGradient(
-      cx,
-      cy,
-      radius * .5,
-      cx,
-      cy,
-      radius + 20
+    value = Math.max(
+        2,
+        Math.min(30, value)
     );
 
-  gold.addColorStop(
-    0,
-    "#fff19a"
-  );
+    slotCountInput.value = value;
 
-  gold.addColorStop(
-    .35,
-    "#ffd02f"
-  );
+    setSlotCount();
 
-  gold.addColorStop(
-    .7,
-    "#d88600"
-  );
-
-  gold.addColorStop(
-    1,
-    "#ffcc36"
-  );
+}
 
 
-  ctx.beginPath();
+function setSlotCount() {
 
-  ctx.arc(
-    cx,
-    cy,
-    radius + 18,
-    0,
-    Math.PI * 2
-  );
+    if (spinning) return;
 
-  ctx.fillStyle = gold;
+    let value =
+        Number(slotCountInput.value);
 
-  ctx.fill();
+    if (!Number.isFinite(value)) {
+        value = 8;
+    }
 
+    value = Math.round(value);
 
-  /* 칸 */
-
-  const slice =
-    Math.PI * 2 /
-    SLOT_COUNT;
-
-
-  for(
-    let i = 0;
-    i < SLOT_COUNT;
-    i++
-  ) {
-
-    const start =
-      rotation +
-      i * slice -
-      Math.PI / 2;
-
-    const end =
-      start + slice;
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-      cx,
-      cy
+    value = Math.max(
+        2,
+        Math.min(30, value)
     );
 
-    ctx.arc(
-      cx,
-      cy,
-      radius,
-      start,
-      end
+    slotCount = value;
+
+    slotCountInput.value = slotCount;
+
+    createLabels();
+
+    drawWheel();
+
+}
+
+
+/* =========================
+   룰렛 그리기
+========================= */
+
+function drawWheel() {
+
+    if (!canvas.width) return;
+
+    const rect = canvas.getBoundingClientRect();
+
+    const size = Math.min(
+        rect.width,
+        rect.height
     );
 
-    ctx.closePath();
+    if (!size) return;
 
+    const cx = size / 2;
+    const cy = size / 2;
 
-    ctx.fillStyle =
-      rouletteColors[
-        i % rouletteColors.length
-      ];
+    const radius = size * 0.40;
 
-    ctx.fill();
-
-
-    ctx.strokeStyle =
-      "rgba(255,255,255,.5)";
-
-    ctx.lineWidth = 2;
-
-    ctx.stroke();
-
-
-    /* 숫자 */
-
-    const angle =
-      start + slice / 2;
-
-    const textRadius =
-      radius * .72;
-
-    const x =
-      cx +
-      Math.cos(angle) *
-      textRadius;
-
-    const y =
-      cy +
-      Math.sin(angle) *
-      textRadius;
-
+    ctx.clearRect(
+        0,
+        0,
+        size,
+        size
+    );
 
     ctx.save();
 
-    ctx.translate(
-      x,
-      y
-    );
+    ctx.translate(cx, cy);
 
-    ctx.rotate(
-      angle + Math.PI / 2
-    );
+    ctx.rotate(currentRotation);
 
-    ctx.fillStyle =
-      "white";
-
-    ctx.font =
-      `bold ${Math.max(
-        12,
-        size * .032
-      )}px Arial`;
-
-    ctx.textAlign =
-      "center";
-
-    ctx.textBaseline =
-      "middle";
-
-    ctx.shadowColor =
-      "rgba(0,0,0,.5)";
-
-    ctx.shadowBlur = 4;
-
-    ctx.fillText(
-      i + 1,
-      0,
-      0
-    );
-
-    ctx.restore();
-  }
-
-
-  /* 중앙 */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    cx,
-    cy,
-    radius * .21,
-    0,
-    Math.PI * 2
-  );
-
-  ctx.fillStyle =
-    "#d99329";
-
-  ctx.fill();
-
-  ctx.strokeStyle =
-    "#ffe16b";
-
-  ctx.lineWidth = 3;
-
-  ctx.stroke();
-
-
-  /* 중앙 버튼 */
-
-  ctx.beginPath();
-
-  ctx.arc(
-    cx,
-    cy,
-    radius * .08,
-    0,
-    Math.PI * 2
-  );
-
-  ctx.fillStyle =
-    "#ff6666";
-
-  ctx.fill();
-
-  ctx.strokeStyle =
-    "#ffaaaa";
-
-  ctx.lineWidth = 2;
-
-  ctx.stroke();
-
-
-  /* 바깥쪽 걸림쇠 */
-
-  for(
-    let i = 0;
-    i < SLOT_COUNT;
-    i++
-  ) {
-
-    const angle =
-      rotation +
-      i * slice -
-      Math.PI / 2;
-
-    const pegRadius =
-      radius + 4;
-
-    const px =
-      cx +
-      Math.cos(angle) *
-      pegRadius;
-
-    const py =
-      cy +
-      Math.sin(angle) *
-      pegRadius;
-
+    /* 바깥 그림자 */
 
     ctx.beginPath();
 
     ctx.arc(
-      px,
-      py,
-      Math.max(
-        5,
-        size * .009
-      ),
-      0,
-      Math.PI * 2
+        0,
+        0,
+        radius + 15,
+        0,
+        Math.PI * 2
     );
 
-
-    const peg =
-      ctx.createRadialGradient(
-        px - 2,
-        py - 2,
-        1,
-        px,
-        py,
-        8
-      );
-
-    peg.addColorStop(
-      0,
-      "#ffffff"
-    );
-
-    peg.addColorStop(
-      .5,
-      "#eeeeee"
-    );
-
-    peg.addColorStop(
-      1,
-      "#999999"
-    );
-
-
-    ctx.fillStyle = peg;
+    ctx.fillStyle = "rgba(0,0,0,.45)";
 
     ctx.fill();
 
-    ctx.strokeStyle =
-      "rgba(80,50,20,.5)";
 
-    ctx.stroke();
-  }
-}
+    /* 룰렛 색상 */
 
-
-
-/* 칸 변경 */
-
-function changeSlots() {
-
-  if(spinning) return;
-
-  SLOT_COUNT =
-    Number(slotSelect.value);
-
-  rotation = 0;
-
-  drawRoulette();
-
-  rouletteResult.textContent =
-    `${SLOT_COUNT}칸 룰렛 준비 완료!`;
-}
+    const colors = [
+        "#d84d5a",
+        "#496ee8",
+        "#e49a38",
+        "#46a66d",
+        "#8b5bd6",
+        "#d05b9b",
+        "#4c9fc8",
+        "#c96d3f"
+    ];
 
 
+    const slice =
+        Math.PI * 2 / slotCount;
 
-/* 화살표 충돌 */
 
-function pointerHit() {
+    /* 칸 */
 
-  const power =
-    Math.min(
-      28,
-      7 + Math.abs(velocity) * 500
+    for (let i = 0; i < slotCount; i++) {
+
+        const start =
+            -Math.PI / 2 +
+            i * slice;
+
+        const end =
+            start + slice;
+
+        ctx.beginPath();
+
+        ctx.moveTo(0, 0);
+
+        ctx.arc(
+            0,
+            0,
+            radius,
+            start,
+            end
+        );
+
+        ctx.closePath();
+
+        ctx.fillStyle =
+            colors[i % colors.length];
+
+        ctx.fill();
+
+        ctx.lineWidth = 3;
+
+        ctx.strokeStyle =
+            "rgba(255,255,255,.22)";
+
+        ctx.stroke();
+
+
+        /* 텍스트 */
+
+        ctx.save();
+
+        const middle =
+            start + slice / 2;
+
+        ctx.rotate(middle);
+
+        ctx.textAlign = "center";
+
+        ctx.textBaseline = "middle";
+
+        let fontSize =
+            Math.max(
+                11,
+                Math.min(
+                    20,
+                    250 / slotCount
+                )
+            );
+
+        ctx.font =
+            `900 ${fontSize}px Arial`;
+
+        ctx.fillStyle = "white";
+
+        ctx.shadowColor =
+            "rgba(0,0,0,.55)";
+
+        ctx.shadowBlur = 5;
+
+        let text =
+            labels[i] || `선택 ${i + 1}`;
+
+        const maxChars =
+            slotCount >= 20 ? 5 : 8;
+
+        if (text.length > maxChars) {
+            text =
+                text.substring(0, maxChars) + "…";
+        }
+
+        ctx.fillText(
+            text,
+            radius * 0.67,
+            0
+        );
+
+        ctx.restore();
+
+    }
+
+
+    /* 내부 링 */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        radius,
+        0,
+        Math.PI * 2
     );
 
-  const direction =
-    Math.random() > .5
-      ? 1
-      : -1;
+    ctx.lineWidth = 9;
 
-  const hit =
-    direction * power;
+    ctx.strokeStyle = "#d8b85b";
+
+    ctx.stroke();
 
 
-  pointer.style.transform =
-    `translateX(-50%) rotate(${hit}deg)`;
+    /* 중심 장식 */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        radius * .16,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle = "#1a2139";
+
+    ctx.fill();
+
+    ctx.lineWidth = 5;
+
+    ctx.strokeStyle = "#c9a94f";
+
+    ctx.stroke();
 
 
-  setTimeout(() => {
+    ctx.restore();
 
-    pointer.style.transform =
-      `translateX(-50%) rotate(${
-        -hit * .3
-      }deg)`;
 
-    setTimeout(() => {
+    /* 바깥쪽 돌출 핀 */
 
-      pointer.style.transform =
-        "translateX(-50%) rotate(0deg)";
+    drawPegs(
+        cx,
+        cy,
+        radius
+    );
 
-    }, 70);
-
-  }, 65);
 }
 
 
+/* =========================
+   바깥 돌출 핀
+========================= */
 
-/* 충돌 확인 */
+function drawPegs(cx, cy, radius) {
 
-function checkCollision() {
+    const rect =
+        canvas.getBoundingClientRect();
 
-  const slice =
-    Math.PI * 2 /
-    SLOT_COUNT;
+    const size =
+        Math.min(rect.width, rect.height);
+
+    const pegRadius =
+        Math.max(5, size * .011);
+
+    const pegDistance =
+        radius + 17;
+
+    ctx.save();
+
+    ctx.translate(cx, cy);
+
+    ctx.rotate(currentRotation);
+
+    for (let i = 0; i < slotCount; i++) {
+
+        const angle =
+            -Math.PI / 2 +
+            i *
+            Math.PI * 2 /
+            slotCount;
+
+        const x =
+            Math.cos(angle) *
+            pegDistance;
+
+        const y =
+            Math.sin(angle) *
+            pegDistance;
 
 
-  /*
-     화살표는 위쪽.
-  */
+        /* 그림자 */
 
-  const pointerAngle =
-    Math.PI * 1.5;
+        ctx.beginPath();
 
+        ctx.arc(
+            x + 2,
+            y + 3,
+            pegRadius + 2,
+            0,
+            Math.PI * 2
+        );
 
-  for(
-    let i = 0;
-    i < SLOT_COUNT;
-    i++
-  ) {
+        ctx.fillStyle =
+            "rgba(0,0,0,.5)";
 
-    const pegAngle =
-      rotation +
-      i * slice -
-      Math.PI / 2;
+        ctx.fill();
 
 
-    let difference =
-      Math.abs(
-        normalizeAngle(
-          pegAngle -
-          pointerAngle
-        )
-      );
+        /* 핀 */
 
+        ctx.beginPath();
 
-    if(
-      difference > Math.PI
-    ) {
+        ctx.arc(
+            x,
+            y,
+            pegRadius,
+            0,
+            Math.PI * 2
+        );
 
-      difference =
-        Math.PI * 2 -
-        difference;
+        ctx.fillStyle = "#d6b75c";
+
+        ctx.fill();
+
+        ctx.lineWidth = 2;
+
+        ctx.strokeStyle =
+            "rgba(255,255,255,.55)";
+
+        ctx.stroke();
+
     }
 
+    ctx.restore();
 
-    /*
-       속도가 빠르면 넓게,
-       느려지면 좁게.
-    */
-
-    const hitRange =
-      .035 +
-      Math.abs(velocity) * .4;
-
-
-    if(
-      difference < hitRange &&
-      lastPeg !== i
-    ) {
-
-      lastPeg = i;
-
-      pointerHit();
-
-      break;
-    }
-  }
 }
 
 
-
-/* 각도 정리 */
+/* =========================
+   회전
+========================= */
 
 function normalizeAngle(angle) {
 
-  angle %=
-    Math.PI * 2;
+    const full =
+        Math.PI * 2;
 
-  if(angle < 0) {
-    angle +=
-      Math.PI * 2;
-  }
+    angle %= full;
 
-  return angle;
+    if (angle < 0) {
+        angle += full;
+    }
+
+    return angle;
+
 }
 
 
+/* easing
+   처음에는 빠르고
+   마지막에 아주 부드럽게 감속
+*/
 
-/* 애니메이션 */
+function easeOutQuint(t) {
 
-function animate(time) {
+    return 1 -
+        Math.pow(
+            1 - t,
+            5
+        );
 
-  if(!spinning) return;
-
-
-  if(!lastTime) {
-    lastTime = time;
-  }
-
-
-  const delta =
-    Math.min(
-      32,
-      time - lastTime
-    );
-
-  lastTime = time;
-
-
-  rotation +=
-    velocity *
-    delta /
-    16;
-
-
-  /*
-     부드러운 감속.
-  */
-
-  velocity *=
-    Math.pow(
-      .985,
-      delta / 16
-    );
-
-
-  checkCollision();
-
-  drawRoulette();
-
-
-  /*
-     마지막에 아주 천천히.
-  */
-
-  if(
-    Math.abs(velocity) <
-    .0018
-  ) {
-
-    velocity = 0;
-
-    spinning = false;
-
-    finishRoulette();
-
-    return;
-  }
-
-
-  requestAnimationFrame(
-    animate
-  );
 }
 
 
+/* =========================
+   포인터 충돌 효과
+========================= */
 
-/* 결과 */
+function checkPointerHits(rotation) {
 
-function finishRoulette() {
+    const slice =
+        Math.PI * 2 / slotCount;
 
-  const slice =
-    Math.PI * 2 /
-    SLOT_COUNT;
+    /*
+      포인터는 위쪽.
+      룰렛의 경계가 포인터를 지날 때
+      핀이 걸리는 듯한 효과.
+    */
 
+    const pointerAngle =
+        normalizeAngle(
+            -rotation
+        );
 
-  const pointerAngle =
-    Math.PI * 1.5;
+    const boundary =
+        Math.round(
+            pointerAngle / slice
+        );
 
+    if (
+        lastBoundary !== null &&
+        boundary !== lastBoundary
+    ) {
 
-  let angle =
-    normalizeAngle(
-      pointerAngle -
-      rotation +
-      Math.PI / 2
-    );
+        pointer.classList.remove("hit");
 
+        void pointer.offsetWidth;
 
-  let selected =
-    Math.floor(
-      angle / slice
-    );
+        pointer.classList.add("hit");
 
+        setTimeout(() => {
+            pointer.classList.remove("hit");
+        }, 140);
 
-  selected %=
-    SLOT_COUNT;
+    }
 
+    lastBoundary = boundary;
 
-  rouletteResult.textContent =
-    `🎉 ${selected + 1}번 칸에 멈췄다!`;
-
-
-  spinButton.disabled =
-    false;
-
-  spinButton.textContent =
-    "🎯 다시 돌리기";
 }
 
 
-
-/* 돌리기 */
+/* =========================
+   룰렛 돌리기
+========================= */
 
 function spinRoulette() {
 
-  if(spinning) return;
+    if (spinning) return;
+
+    spinning = true;
+
+    spinButton.disabled = true;
+
+    resultText.textContent = "...";
+
+    statusText.textContent =
+        "룰렛이 돌아가는 중...";
+
+    pointer.classList.remove("hit");
+
+    lastBoundary = null;
 
 
-  spinning = true;
+    /* 결과 랜덤 선택 */
 
-  spinButton.disabled =
-    true;
-
-  spinButton.textContent =
-    "🎰 돌아가는 중...";
-
-
-  rouletteResult.textContent =
-    "운명이 결정되고 있다...";
+    const targetIndex =
+        Math.floor(
+            Math.random() * slotCount
+        );
 
 
-  /*
-     시작 속도.
-     숫자가 높을수록 빨라짐.
-  */
+    /*
+      선택된 칸의 중심을
+      위쪽 포인터에 맞춘다.
+    */
 
-  velocity =
-    .035 +
-    Math.random() * .012;
+    const slice =
+        Math.PI * 2 / slotCount;
 
-
-  lastTime = 0;
-
-  lastPeg = -1;
+    const targetCenter =
+        targetIndex * slice +
+        slice / 2;
 
 
-  requestAnimationFrame(
-    animate
-  );
-}
+    /*
+      룰렛을 많이 돌린 뒤
+      목표 위치에서 멈추도록 계산.
+    */
+
+    const extraTurns =
+        6 +
+        Math.random() * 3.5;
+
+    const targetRotation =
+        extraTurns * Math.PI * 2 -
+        targetCenter;
 
 
+    const startRotation =
+        currentRotation;
 
-/* ==================================================
-   순발력 게임
-================================================== */
-
-const reactionBox =
-  document.getElementById(
-    "reactionBox"
-  );
-
-const reactionResult =
-  document.getElementById(
-    "reactionResult"
-  );
-
-let reactionStart = 0;
-
-let reactionTimer = null;
-
-let reactionWaiting = false;
+    const finalRotation =
+        currentRotation +
+        targetRotation;
 
 
-function startReaction() {
+    /*
+      6.5~8.5초 정도의 긴 회전
+    */
 
-  reactionBox.className =
-    "reaction-box ready";
+    const duration =
+        6500 +
+        Math.random() * 2000;
 
-  reactionBox.textContent =
-    "기다려...";
-
-  reactionResult.textContent =
-    "";
-
-  reactionWaiting = true;
-
-
-  const wait =
-    1500 +
-    Math.random() * 3500;
-
-
-  reactionTimer =
-    setTimeout(() => {
-
-      reactionBox.className =
-        "reaction-box go";
-
-      reactionBox.textContent =
-        "🔥 지금!!!";
-
-      reactionStart =
+    const startTime =
         performance.now();
 
-      reactionWaiting =
-        false;
 
-    }, wait);
-}
+    function animate(now) {
 
+        const elapsed =
+            now - startTime;
 
-function reactionClick() {
-
-  if(!reactionWaiting &&
-     reactionStart > 0) {
-
-    const time =
-      performance.now() -
-      reactionStart;
-
-    reactionResult.textContent =
-      `⚡ ${Math.round(time)}ms!`;
-
-    reactionStart = 0;
-
-    reactionBox.className =
-      "reaction-box";
-
-    reactionBox.textContent =
-      "다시 도전해봐!";
-
-    return;
-  }
+        let progress =
+            Math.min(
+                elapsed / duration,
+                1
+            );
 
 
-  if(reactionWaiting) {
+        /*
+          초반 빠르게,
+          중반부터 감속,
+          마지막에는 천천히.
+        */
 
-    clearTimeout(
-      reactionTimer
-    );
-
-    reactionWaiting = false;
-
-    reactionStart = 0;
-
-    reactionBox.className =
-      "reaction-box";
-
-    reactionBox.textContent =
-      "너무 빨랐어! 😆";
-
-    reactionResult.textContent =
-      "신호가 나오기 전에 눌렀다!";
-
-  }
-}
+        const eased =
+            easeOutQuint(progress);
 
 
-
-/* ==================================================
-   주사위
-================================================== */
-
-const dice =
-  document.getElementById(
-    "dice"
-  );
-
-const diceResult =
-  document.getElementById(
-    "diceResult"
-  );
+        currentRotation =
+            startRotation +
+            targetRotation *
+            eased;
 
 
-const diceFaces = [
-  "⚀",
-  "⚁",
-  "⚂",
-  "⚃",
-  "⚄",
-  "⚅"
-];
+        drawWheel();
+
+        checkPointerHits(
+            currentRotation
+        );
 
 
-function rollDice() {
+        if (progress < 1) {
 
-  dice.classList.add(
-    "rolling"
-  );
+            animationFrame =
+                requestAnimationFrame(
+                    animate
+                );
 
-  diceResult.textContent =
-    "굴러가는 중...";
+        } else {
 
+            currentRotation =
+                finalRotation;
 
-  setTimeout(() => {
+            drawWheel();
 
-    dice.classList.remove(
-      "rolling"
-    );
+            finishSpin(
+                targetIndex
+            );
 
+        }
 
-    const number =
-      Math.floor(
-        Math.random() * 6
-      );
-
-
-    dice.textContent =
-      diceFaces[number];
+    }
 
 
-    diceResult.textContent =
-      `🎉 ${number + 1}이 나왔다!`;
-
-  }, 1000);
-}
-
-
-
-/* ==================================================
-   준비중
-================================================== */
-
-function comingSoon() {
-
-  alert(
-    "새로운 게임을 준비하고 있어! 🎮"
-  );
+    animationFrame =
+        requestAnimationFrame(
+            animate
+        );
 
 }
 
 
+/* =========================
+   결과
+========================= */
 
-/* ==================================================
+function finishSpin(index) {
+
+    spinning = false;
+
+    spinButton.disabled = false;
+
+    const result =
+        labels[index] ||
+        `선택 ${index + 1}`;
+
+
+    /*
+      마지막에 살짝 한 번 튕김
+    */
+
+    pointer.classList.remove("hit");
+
+    void pointer.offsetWidth;
+
+    pointer.classList.add("hit");
+
+    resultText.textContent =
+        result;
+
+    statusText.textContent =
+        "결과가 결정됐어!";
+
+}
+
+
+/* =========================
+   창 크기 변경
+========================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            !roulettePage.classList.contains(
+                "hidden"
+            )
+        ) {
+
+            resizeCanvas();
+
+        }
+
+    }
+);
+
+
+/* =========================
    시작
-================================================== */
+========================= */
 
-resizeRoulette();
+createLabels();
 
 </script>
 
