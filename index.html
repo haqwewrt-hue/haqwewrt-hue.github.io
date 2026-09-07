@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini Game Center</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MINI GAME CENTER</title>
 
 <style>
 *{
@@ -12,55 +12,80 @@
     padding:0;
 }
 
-html,body{
-    width:100%;
-    min-height:100%;
+:root{
+    --bg:#05080f;
+    --panel:#0d1423;
+    --panel2:#111b2e;
+    --cyan:#5ff7ff;
+    --blue:#527dff;
+    --purple:#7957ff;
+    --gold:#ffd85c;
+    --text:#f5f7ff;
+    --muted:#93a0bd;
 }
 
 body{
     min-height:100vh;
-    font-family:Arial,"Noto Sans KR",sans-serif;
-    color:white;
+    color:var(--text);
+    font-family:
+        "Segoe UI",
+        "Noto Sans KR",
+        Arial,
+        sans-serif;
+
     background:
-        radial-gradient(circle at 20% 20%,#263b70 0%,transparent 35%),
-        radial-gradient(circle at 80% 80%,#401d5d 0%,transparent 35%),
-        linear-gradient(135deg,#080b16,#11182b 50%,#090b15);
+        radial-gradient(circle at 50% -10%,
+            rgba(65,150,255,.18),
+            transparent 35%),
+        linear-gradient(180deg,#080c15,#03050a);
+
     overflow-x:hidden;
 }
 
-body::before{
+body:before,
+body:after{
     content:"";
     position:fixed;
-    inset:-50%;
+    top:0;
+    bottom:0;
+    width:3px;
     background:
-        radial-gradient(circle,rgba(255,255,255,.08) 1px,transparent 1px);
-    background-size:35px 35px;
-    animation:bgMove 20s linear infinite;
-    pointer-events:none;
+        linear-gradient(
+            180deg,
+            transparent,
+            var(--cyan),
+            transparent
+        );
+    box-shadow:0 0 18px var(--cyan);
+    opacity:.7;
+    z-index:-1;
 }
 
-@keyframes bgMove{
-    from{transform:translate(0,0)}
-    to{transform:translate(35px,35px)}
+body:before{left:4%}
+body:after{right:4%}
+
+button,
+input,
+textarea,
+select{
+    font:inherit;
 }
 
 button{
-    font-family:inherit;
+    cursor:pointer;
 }
 
 .hidden{
-    display:none!important;
+    display:none !important;
 }
 
-/* =========================
+/* =====================================
    HOME
-========================= */
+===================================== */
 
 #home{
-    position:relative;
-    z-index:1;
     min-height:100vh;
-    padding:55px 25px;
+    padding:55px 25px 80px;
 }
 
 .header{
@@ -70,57 +95,62 @@ button{
 
 .header h1{
     font-size:clamp(36px,6vw,70px);
-    font-weight:900;
-    letter-spacing:-3px;
+    font-weight:1000;
+    letter-spacing:3px;
+
     text-shadow:
-        0 0 15px rgba(100,160,255,.6),
-        0 0 35px rgba(100,100,255,.3);
+        0 0 15px rgba(95,247,255,.5),
+        0 0 50px rgba(82,125,255,.3);
 }
 
 .header p{
     margin-top:12px;
-    color:#aeb9d6;
+    color:var(--muted);
     font-size:17px;
 }
 
 .games{
-    width:min(1100px,100%);
+    width:min(1400px,100%);
     margin:auto;
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-    gap:22px;
+    grid-template-columns:
+        repeat(auto-fit,minmax(230px,1fr));
+
+    gap:20px;
 }
 
 .game-card{
-    position:relative;
-    min-height:220px;
-    padding:30px;
-    border-radius:25px;
-    background:rgba(20,27,48,.72);
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
-    overflow:hidden;
-    transition:.35s;
-}
+    min-height:270px;
+    padding:28px 20px;
 
-.game-card::before{
-    content:"";
-    position:absolute;
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    right:-70px;
-    top:-70px;
-    background:rgba(90,130,255,.16);
-    filter:blur(5px);
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,29,50,.9),
+            rgba(8,13,24,.92)
+        );
+
+    border:1px solid rgba(95,247,255,.12);
+    border-radius:24px;
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.35);
+
+    transition:.25s;
 }
 
 .game-card:hover{
-    transform:translateY(-10px);
-    border-color:rgba(130,170,255,.5);
+    transform:translateY(-7px);
+
+    border-color:
+        rgba(95,247,255,.45);
+
     box-shadow:
-        0 25px 70px rgba(0,0,0,.4),
-        0 0 30px rgba(80,130,255,.12);
+        0 0 25px rgba(95,247,255,.12),
+        0 25px 65px rgba(0,0,0,.5);
 }
 
 .game-icon{
@@ -129,496 +159,1276 @@ button{
 }
 
 .game-card h2{
-    font-size:25px;
-    margin-bottom:8px;
+    font-size:22px;
+    margin-bottom:10px;
 }
 
 .game-card p{
-    color:#9faac4;
-    margin-bottom:25px;
+    color:var(--muted);
+    min-height:45px;
+    margin-bottom:22px;
 }
 
-.play-btn{
-    border:none;
+.play-btn,
+.action{
+    border:0;
     border-radius:13px;
-    padding:12px 22px;
+
+    padding:13px 22px;
+
     color:white;
-    background:linear-gradient(135deg,#527dff,#7657ff);
-    cursor:pointer;
-    font-weight:bold;
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--purple)
+        );
+
+    box-shadow:
+        0 9px 28px rgba(70,100,255,.25);
+
     transition:.2s;
-    box-shadow:0 8px 25px rgba(70,100,255,.25);
 }
 
-.play-btn:hover{
+.play-btn:hover,
+.action:hover{
     transform:scale(1.05);
 }
 
-/* =========================
+.action{
+    width:min(100%,360px);
+    margin-top:18px;
+}
+
+.danger{
+    background:
+        linear-gradient(
+            135deg,
+            #ff4d68,
+            #b43fff
+        );
+}
+
+/* =====================================
    COMMON PAGE
-========================= */
+===================================== */
 
 .page{
-    position:relative;
-    z-index:2;
     min-height:100vh;
     padding:25px;
 }
 
 .topbar{
-    width:min(1200px,100%);
+    width:min(1400px,100%);
     margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
 
-.back-btn{
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.07);
-    color:white;
-    padding:11px 17px;
-    border-radius:12px;
-    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:15px;
 }
 
 .topbar-title{
-    font-size:23px;
-    font-weight:800;
+    font-size:24px;
+    font-weight:1000;
+    text-align:center;
 }
 
-.layout{
-    width:min(1200px,100%);
-    margin:35px auto 0;
-    display:grid;
-    grid-template-columns:1fr 320px;
-    gap:30px;
+.back-btn{
+    padding:11px 17px;
+
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:12px;
+
+    background:rgba(255,255,255,.06);
+    color:white;
+}
+
+.back-btn:hover{
+    background:rgba(255,255,255,.12);
 }
 
 .panel-box{
-    border-radius:30px;
-    background:rgba(13,18,34,.72);
-    border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 30px 90px rgba(0,0,0,.35);
-    padding:28px;
+    width:min(1200px,100%);
+    margin:30px auto;
+
+    padding:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(14,24,42,.94),
+            rgba(5,10,19,.96)
+        );
+
+    border:
+        1px solid rgba(95,247,255,.14);
+
+    border-radius:28px;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.45);
+}
+
+.center{
+    text-align:center;
+}
+
+.game-output{
+    margin:22px 0;
+
+    min-height:40px;
+
+    color:var(--gold);
+
+    font-size:27px;
+    font-weight:1000;
 }
 
 .control-panel{
-    border-radius:25px;
-    background:rgba(18,24,43,.82);
-    border:1px solid rgba(255,255,255,.1);
+    width:min(440px,100%);
+    margin:30px auto;
     padding:25px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
 }
 
-.action{
-    width:100%;
-    height:55px;
-    border:none;
-    border-radius:15px;
-    color:white;
-    background:linear-gradient(135deg,#5d7dff,#7c50ff);
-    font-size:19px;
-    font-weight:900;
-    cursor:pointer;
+.control-group{
+    margin:18px 0;
 }
 
-.action:hover{
-    filter:brightness(1.12);
-}
-
-.action:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-}
-
-.result{
-    margin-top:18px;
-    padding:18px;
-    border-radius:15px;
-    background:rgba(255,255,255,.05);
-    text-align:center;
-    min-height:72px;
-}
-
-.result small{
+.control-group label{
     display:block;
-    color:#8490ae;
-    margin-bottom:5px;
+    margin-bottom:8px;
+    color:#aeb8d0;
+    font-weight:800;
 }
 
-.result strong{
-    font-size:25px;
-    color:#ffdb68;
+input,
+textarea,
+select{
+    width:100%;
+
+    padding:12px 14px;
+
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:11px;
+
+    color:white;
+    background:#10192a;
+    outline:none;
+}
+
+textarea{
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--cyan);
+}
+
+.row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.row>*{
+    flex:1;
+}
+
+.number-control{
+    display:flex;
+    gap:8px;
+}
+
+.number-control button{
+    width:45px;
+
+    border:0;
+    border-radius:10px;
+
+    color:white;
+    background:#293553;
+    font-size:23px;
 }
 
 .status{
-    text-align:center;
-    color:#7e8ba8;
-    font-size:13px;
-    margin-top:15px;
+    color:#8996b1;
+    margin-top:14px;
 }
 
-/* =========================
+/* =====================================
+   RESULT POPUP
+===================================== */
+
+.result-overlay{
+    position:fixed;
+    inset:0;
+
+    z-index:999999;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(0,0,0,.86);
+    backdrop-filter:blur(12px);
+
+    animation:fadeIn .25s ease;
+}
+
+.result-popup{
+    width:min(760px,90vw);
+    min-height:440px;
+
+    padding:45px 30px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    border:2px solid rgba(95,247,255,.72);
+    border-radius:32px;
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(75,145,255,.2),
+            transparent 45%
+        ),
+        #09111f;
+
+    box-shadow:
+        0 0 40px rgba(95,247,255,.25),
+        0 0 120px rgba(82,125,255,.18),
+        0 35px 100px rgba(0,0,0,.8);
+
+    animation:popup .5s cubic-bezier(.2,1.4,.3,1);
+}
+
+.result-icon{
+    font-size:82px;
+    line-height:1;
+    margin-bottom:18px;
+
+    animation:bounceIcon .8s ease-in-out infinite alternate;
+}
+
+.result-title{
+    color:#aeb9d3;
+    font-size:23px;
+    font-weight:900;
+}
+
+.result-value{
+    margin-top:14px;
+
+    font-size:clamp(65px,11vw,125px);
+    line-height:1;
+
+    font-weight:1000;
+
+    color:white;
+
+    text-shadow:
+        0 0 12px white,
+        0 0 35px var(--cyan),
+        0 0 80px rgba(80,120,255,.5);
+}
+
+.result-sub{
+    margin-top:23px;
+
+    font-size:26px;
+    font-weight:1000;
+
+    color:var(--cyan);
+}
+
+.result-close{
+    margin-top:38px;
+
+    min-width:240px;
+
+    padding:16px 25px;
+
+    border:0;
+    border-radius:15px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--purple)
+        );
+
+    font-weight:1000;
+
+    box-shadow:
+        0 12px 35px rgba(70,100,255,.4);
+}
+
+.result-close:hover{
+    transform:scale(1.05);
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+@keyframes popup{
+    from{
+        transform:scale(.55);
+        opacity:0;
+    }
+    70%{
+        transform:scale(1.04);
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+@keyframes bounceIcon{
+    from{transform:translateY(0)}
+    to{transform:translateY(-9px) scale(1.08)}
+}
+
+/* =====================================
    ROULETTE
-========================= */
+===================================== */
+
+.roulette-layout{
+    width:min(1300px,100%);
+    margin:30px auto;
+
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:25px;
+}
 
 .roulette-box{
-    min-height:700px;
+    min-height:680px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    position:relative;
+
+    border-radius:30px;
+
+    background:#05090f;
+    border:1px solid rgba(95,247,255,.16);
+
     overflow:hidden;
 }
 
 .wheel-wrapper{
-    position:relative;
-    width:min(620px,90vw);
+    width:min(650px,90vw);
     aspect-ratio:1;
+
+    position:relative;
 }
 
 #wheelCanvas{
     position:absolute;
     inset:0;
+
     width:100%;
     height:100%;
-    display:block;
 }
 
-/* 정중앙 위쪽에 고정 */
 .pointer{
     position:absolute;
+
     left:50%;
-    top:-5px;
+    top:-4px;
+
+    transform:translateX(-50%);
 
     width:0;
     height:0;
 
-    border-left:19px solid transparent;
-    border-right:19px solid transparent;
-    border-top:48px solid #ffcc4d;
-
-    transform:translateX(-50%) rotate(0deg);
-    transform-origin:50% 0%;
-
-    z-index:20;
+    border-left:17px solid transparent;
+    border-right:17px solid transparent;
+    border-top:40px solid #ff405c;
 
     filter:
-        drop-shadow(0 5px 5px rgba(0,0,0,.55))
-        drop-shadow(0 0 8px rgba(255,190,40,.35));
-}
+        drop-shadow(
+            0 0 9px rgba(255,60,90,.9)
+        );
 
-/* 핀에 부딪히는 느낌 */
-.pointer.hit{
-    animation:pointerHit .2s ease-out;
-}
-
-@keyframes pointerHit{
-
-    0%{
-        transform:translateX(-50%) rotate(0deg);
-    }
-
-    22%{
-        transform:translateX(-50%) rotate(21deg);
-    }
-
-    45%{
-        transform:translateX(-50%) rotate(-14deg);
-    }
-
-    70%{
-        transform:translateX(-50%) rotate(8deg);
-    }
-
-    100%{
-        transform:translateX(-50%) rotate(0deg);
-    }
+    z-index:5;
 }
 
 .center-glow{
     position:absolute;
+
     left:50%;
     top:50%;
 
-    width:78px;
-    height:78px;
+    width:60px;
+    height:60px;
 
     transform:translate(-50%,-50%);
+
     border-radius:50%;
 
-    background:
-        radial-gradient(circle,#303d63,#171d34 55%,#090d19);
-
-    border:5px solid #59688f;
+    background:#0c1526;
+    border:5px solid #d7b85c;
 
     box-shadow:
-        0 0 25px rgba(100,130,255,.35),
-        inset 0 0 20px rgba(0,0,0,.8);
-
-    z-index:15;
+        0 0 25px rgba(255,215,90,.7);
 }
 
-.control-group{
-    margin-bottom:20px;
-}
+/* =====================================
+   RACE
+===================================== */
 
-.control-group label{
-    display:block;
-    color:#9da9c5;
-    font-size:14px;
-    margin-bottom:9px;
-}
+.race-track{
+    width:min(900px,100%);
+    margin:35px auto;
 
-.number-control{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
+    padding:18px;
 
-.number-control button{
-    width:40px;
-    height:40px;
-    border:none;
-    border-radius:10px;
-    color:white;
-    background:#293453;
-    cursor:pointer;
-    font-size:20px;
-}
+    background:#050912;
 
-#slotCount{
-    width:75px;
-    height:40px;
-    text-align:center;
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:10px;
-    background:#11172a;
-    color:white;
-    font-size:17px;
-}
-
-#labels{
-    max-height:300px;
-    overflow-y:auto;
-    padding-right:5px;
-}
-
-.label-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:8px;
-}
-
-.label-number{
-    width:28px;
-    color:#7784a4;
-    font-size:13px;
-}
-
-.label-row input{
-    min-width:0;
-    flex:1;
-    height:37px;
-    padding:0 10px;
     border:1px solid rgba(255,255,255,.1);
-    border-radius:9px;
-    background:#10162a;
-    color:white;
-    outline:none;
+    border-radius:20px;
 }
 
-/* =========================
-   COMMON MINI GAMES
-========================= */
+.race-lane{
+    position:relative;
 
-.center{
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-height:620px;
+    height:58px;
+
+    margin:10px 0;
+
+    border-radius:12px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,.04) 0 50px,
+            rgba(255,255,255,.01) 50px 100px
+        );
+
+    border-right:5px dashed white;
+    overflow:hidden;
 }
+
+.runner{
+    position:absolute;
+
+    left:0;
+    top:7px;
+
+    font-size:35px;
+
+    will-change:left;
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(255,255,255,.4)
+        );
+}
+
+.lane-label{
+    position:absolute;
+    left:8px;
+    top:18px;
+
+    color:#72809e;
+    font-size:12px;
+}
+
+/* =====================================
+   RPS
+===================================== */
 
 .big-emoji{
-    font-size:110px;
-    margin-bottom:25px;
-}
-
-.game-output{
-    font-size:28px;
-    font-weight:900;
-    color:#ffdb68;
+    font-size:120px;
     margin:20px;
 }
 
-/* =========================
-   RPS
-========================= */
-
 .choices{
     display:flex;
-    gap:14px;
-    flex-wrap:wrap;
     justify-content:center;
-    margin:25px 0;
+    flex-wrap:wrap;
+    gap:15px;
 }
 
 .choices button{
-    font-size:45px;
-    width:90px;
-    height:80px;
-    border:none;
+    width:100px;
+    height:90px;
+
+    border:0;
     border-radius:18px;
-    background:#293453;
+
+    background:#263452;
     color:white;
-    cursor:pointer;
+
+    font-size:45px;
+
     transition:.2s;
 }
 
 .choices button:hover{
     transform:scale(1.08);
-    background:#394a78;
 }
 
-/* =========================
+/* =====================================
    DICE
-========================= */
+===================================== */
 
 .dice{
     font-size:120px;
     margin:20px;
+
+    text-shadow:
+        0 0 25px rgba(255,255,255,.25);
 }
 
-/* =========================
+/* =====================================
    CARD
-========================= */
+===================================== */
 
 .card{
-    width:150px;
-    height:210px;
-    border-radius:18px;
-    background:white;
-    color:#15192a;
+    width:160px;
+    height:225px;
+
+    margin:25px auto;
+
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
+
+    border-radius:20px;
+
+    background:white;
+    color:#111;
+
     font-size:65px;
-    margin:20px;
-    box-shadow:0 15px 35px rgba(0,0,0,.3);
+    font-weight:1000;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.45);
 }
 
-/* =========================
-   RACE
-========================= */
-
-.race-track{
-    width:100%;
-    max-width:750px;
-    background:#10172a;
-    border-radius:18px;
-    padding:15px;
-    margin:25px 0;
-}
-
-.runner{
-    height:45px;
-    position:relative;
-    margin:10px 0;
-    background:rgba(255,255,255,.05);
-    border-radius:10px;
-    overflow:hidden;
-}
-
-.runner::after{
-    content:"";
-    position:absolute;
-    right:15px;
-    top:0;
-    height:100%;
-    border-right:3px dashed rgba(255,255,255,.4);
-}
-
-.runner span{
-    position:absolute;
-    left:0;
-    top:5px;
-    font-size:28px;
-    transition:left 2.4s cubic-bezier(.2,.7,.2,1);
-    z-index:2;
-}
-
-/* =========================
+/* =====================================
    TARGET
-========================= */
+===================================== */
 
 .target-area{
-    width:min(650px,90vw);
-    height:420px;
+    width:min(850px,100%);
+    height:440px;
+
+    margin:20px auto;
+
     position:relative;
-    background:#10172a;
-    border-radius:22px;
-    border:1px solid rgba(255,255,255,.1);
+
     overflow:hidden;
-    margin:20px;
+
+    border-radius:22px;
+
+    background:#070d18;
+
+    border:1px solid rgba(255,255,255,.1);
 }
 
 .target{
     position:absolute;
-    width:55px;
-    height:55px;
+
+    width:60px;
+    height:60px;
+
     border-radius:50%;
+
     border:5px solid white;
+
     background:#ff405c;
-    cursor:pointer;
+
+    box-shadow:
+        0 0 20px #ff405c;
+
     display:none;
-    box-shadow:0 0 20px rgba(255,64,92,.7);
 }
 
-/* =========================
+/* =====================================
+   MATCHING
+===================================== */
+
+.match-grid{
+    width:min(800px,100%);
+    margin:25px auto;
+
+    display:grid;
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+}
+
+.match-card{
+    aspect-ratio:1;
+
+    border:0;
+    border-radius:15px;
+
+    color:white;
+
+    background:#18243c;
+
+    font-size:28px;
+    font-weight:1000;
+
+    transition:.2s;
+}
+
+.match-card:hover{
+    transform:scale(1.03);
+}
+
+.match-card.open{
+    background:#273d67;
+}
+
+.match-card.matched{
+    background:#174f53;
+    border:2px solid var(--cyan);
+}
+
+/* =====================================
+   BOARD GAMES
+===================================== */
+
+.board-wrap{
+    width:min(760px,95vw);
+    margin:25px auto;
+    overflow:auto;
+}
+
+.board{
+    display:grid;
+    margin:auto;
+
+    background:#d7a95a;
+
+    border:7px solid #70451e;
+}
+
+.omok-board{
+    width:600px;
+    height:600px;
+
+    grid-template-columns:
+        repeat(15,1fr);
+}
+
+.go-board{
+    width:560px;
+    height:560px;
+
+    grid-template-columns:
+        repeat(9,1fr);
+}
+
+.board-cell{
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid rgba(60,35,10,.7);
+
+    cursor:pointer;
+}
+
+.board-cell:before{
+    content:"";
+
+    position:absolute;
+
+    width:76%;
+    height:76%;
+
+    border-radius:50%;
+}
+
+.stone-black:before{
+    background:#111;
+    box-shadow:
+        inset -4px -4px 8px rgba(255,255,255,.15),
+        0 3px 5px rgba(0,0,0,.45);
+}
+
+.stone-white:before{
+    background:#eee;
+    box-shadow:
+        inset -4px -4px 8px rgba(0,0,0,.2),
+        0 3px 5px rgba(0,0,0,.45);
+}
+
+/* =====================================
+   JANGGI
+===================================== */
+
+.janggi-board{
+    width:720px;
+    height:800px;
+
+    display:grid;
+    grid-template-columns:
+        repeat(9,1fr);
+    grid-template-rows:
+        repeat(10,1fr);
+
+    background:#b86e31;
+
+    border:8px solid #623918;
+}
+
+.janggi-cell{
+    position:relative;
+
+    border:1px solid #5d3518;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+}
+
+.janggi-cell:after{
+    content:"";
+
+    width:68%;
+    height:68%;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    display:none;
+}
+
+.janggi-piece{
+    position:relative;
+
+    z-index:2;
+
+    width:70%;
+    height:70%;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:18px;
+    font-weight:1000;
+
+    border:2px solid #4a2a12;
+}
+
+.red-piece{
+    background:#e8b56c;
+    color:#b31313;
+}
+
+.blue-piece{
+    background:#e8b56c;
+    color:#133d9b;
+}
+
+/* =====================================
+   MARBLE
+===================================== */
+
+.marble-layout{
+    width:min(1250px,100%);
+    margin:30px auto;
+
+    display:grid;
+    grid-template-columns:300px 1fr;
+    gap:25px;
+}
+
+.map-select{
+    display:grid;
+    gap:10px;
+}
+
+.map-btn{
+    padding:13px;
+
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;
+
+    color:white;
+    background:#111b2d;
+
+    text-align:left;
+}
+
+.map-btn.active{
+    border-color:var(--cyan);
+
+    box-shadow:
+        0 0 15px rgba(95,247,255,.15);
+}
+
+.marble-map{
+    min-height:650px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:30px;
+
+    border:2px solid rgba(255,255,255,.15);
+
+    padding:30px;
+}
+
+.theme-lava{
+    background:
+        radial-gradient(circle at 30% 70%,
+            rgba(255,50,20,.5),
+            transparent 25%),
+        linear-gradient(
+            145deg,
+            #32100b,
+            #0b0503
+        );
+}
+
+.theme-sea{
+    background:
+        radial-gradient(circle at 50% 60%,
+            rgba(0,180,255,.4),
+            transparent 30%),
+        linear-gradient(
+            145deg,
+            #06344a,
+            #031019
+        );
+}
+
+.theme-ice{
+    background:
+        radial-gradient(circle at 50% 40%,
+            rgba(150,240,255,.4),
+            transparent 35%),
+        linear-gradient(
+            145deg,
+            #183e50,
+            #061119
+        );
+}
+
+.theme-forest{
+    background:
+        radial-gradient(circle at 50% 50%,
+            rgba(40,180,80,.3),
+            transparent 35%),
+        linear-gradient(
+            145deg,
+            #12351d,
+            #040b06
+        );
+}
+
+.marble-path{
+    position:absolute;
+
+    left:8%;
+    right:8%;
+    top:25%;
+    height:50%;
+
+    border:
+        7px solid rgba(255,255,255,.25);
+
+    border-radius:35px;
+
+    transform:
+        rotate(-2deg);
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,.07) 0 55px,
+            transparent 55px 110px
+        );
+}
+
+.marble{
+    position:absolute;
+
+    width:44px;
+    height:44px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            white,
+            #63eaff 22%,
+            #2877ff 55%,
+            #142b70
+        );
+
+    box-shadow:
+        0 0 18px #53eaff;
+
+    left:10%;
+    top:47%;
+
+    transition:
+        left .7s,
+        top .7s;
+}
+
+.trap{
+    position:absolute;
+
+    padding:8px 12px;
+
+    border-radius:10px;
+
+    font-size:13px;
+    font-weight:900;
+
+    background:rgba(0,0,0,.55);
+
+    border:1px solid rgba(255,255,255,.15);
+}
+
+/* =====================================
+   LOTTERY GAMES
+===================================== */
+
+.name-list{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(150px,1fr));
+
+    gap:8px;
+
+    margin:15px 0;
+}
+
+.name-item{
+    padding:10px;
+
+    background:#101a2b;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.rocket-stage{
+    width:min(850px,100%);
+    height:500px;
+
+    margin:20px auto;
+
+    position:relative;
+    overflow:hidden;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #02050b,
+            #07142a
+        );
+
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.rocket{
+    position:absolute;
+
+    left:50%;
+    bottom:30px;
+
+    transform:translateX(-50%);
+
+    font-size:75px;
+
+    transition:
+        bottom 3s cubic-bezier(.2,.8,.3,1);
+}
+
+.banana-stage{
+    width:min(900px,100%);
+    min-height:480px;
+
+    margin:20px auto;
+
+    position:relative;
+
+    border-radius:25px;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(90,255,100,.08),
+            transparent 45%
+        ),
+        #071008;
+
+    border:1px solid rgba(90,255,100,.12);
+}
+
+.monkey{
+    position:absolute;
+
+    font-size:80px;
+
+    left:50%;
+    top:45%;
+
+    transform:translate(-50%,-50%);
+
+    transition:
+        left 1.2s cubic-bezier(.2,.8,.3,1),
+        top 1.2s cubic-bezier(.2,.8,.3,1);
+}
+
+.bananas{
+    position:absolute;
+    inset:0;
+}
+
+.banana{
+    position:absolute;
+
+    padding:10px 14px;
+
+    border:0;
+    border-radius:13px;
+
+    color:#191300;
+
+    background:#ffe55d;
+
+    font-weight:1000;
+
+    box-shadow:
+        0 8px 20px rgba(255,220,70,.15);
+
+    transition:.2s;
+}
+
+.banana:hover{
+    transform:scale(1.1);
+}
+
+/* =====================================
+   LADDER
+===================================== */
+
+.ladder-board{
+    width:min(1000px,100%);
+    height:600px;
+
+    margin:25px auto;
+
+    position:relative;
+
+    overflow:auto;
+
+    background:#070c16;
+
+    border-radius:20px;
+
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.ladder-svg{
+    width:100%;
+    height:100%;
+}
+
+/* =====================================
+   BOXES
+===================================== */
+
+.box-grid{
+    width:min(900px,100%);
+    margin:25px auto;
+
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(110px,1fr));
+
+    gap:15px;
+}
+
+.pick-box{
+    aspect-ratio:1;
+
+    border:2px solid #263b62;
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #172541,
+            #0d1627
+        );
+
+    color:white;
+
+    font-size:40px;
+
+    transition:.2s;
+}
+
+.pick-box:hover{
+    transform:translateY(-5px);
+    border-color:var(--cyan);
+}
+
+/* =====================================
+   NUMBER
+===================================== */
+
+.number-results{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(100px,1fr));
+
+    gap:10px;
+
+    margin:20px auto;
+
+    width:min(800px,100%);
+}
+
+.number-chip{
+    padding:15px;
+
+    border-radius:12px;
+
+    background:#132039;
+
+    font-size:24px;
+    font-weight:1000;
+}
+
+/* =====================================
+   GROUPS
+===================================== */
+
+.group-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(200px,1fr));
+
+    gap:15px;
+
+    margin-top:25px;
+}
+
+.group-box{
+    padding:18px;
+
+    border-radius:17px;
+
+    background:#101a2d;
+
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.group-box h3{
+    color:var(--cyan);
+    margin-bottom:12px;
+}
+
+.group-member{
+    padding:7px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+/* =====================================
    MOBILE
-========================= */
+===================================== */
 
-@media(max-width:900px){
+@media(max-width:950px){
 
-    .layout{
+    .roulette-layout,
+    .marble-layout{
         grid-template-columns:1fr;
     }
 
     .roulette-box{
         min-height:auto;
-        padding:25px 10px;
+        padding:20px;
     }
 
-    .control-panel{
-        max-width:620px;
-        width:100%;
-        margin:auto;
-    }
 }
 
-@media(max-width:500px){
+@media(max-width:700px){
 
     .page{
         padding:15px;
     }
 
-    .topbar-title{
-        font-size:18px;
-    }
-
     .panel-box{
-        padding:15px;
-    }
-
-    .control-panel{
         padding:18px;
     }
 
-    .game-output{
+    .match-grid{
+        grid-template-columns:
+            repeat(4,1fr);
+    }
+
+    .result-popup{
+        min-height:360px;
+        padding:30px 20px;
+    }
+
+    .result-icon{
+        font-size:65px;
+    }
+
+    .result-sub{
         font-size:21px;
+    }
+
+    .omok-board{
+        width:500px;
+        height:500px;
+    }
+
+    .go-board{
+        width:500px;
+        height:500px;
     }
 }
 </style>
@@ -626,497 +1436,1244 @@ button{
 
 <body>
 
-<!-- =========================
+<!-- =====================================================
      HOME
-========================= -->
+===================================================== -->
 
 <section id="home">
 
-    <div class="header">
-        <h1>MINI GAME CENTER</h1>
-        <p>원하는 게임을 선택해봐</p>
-    </div>
+<div class="header">
+    <h1>MINI GAME CENTER</h1>
+    <p>게임을 선택해서 시작해봐</p>
+</div>
 
-    <div class="games">
+<div class="games">
 
-        <div class="game-card">
-            <div class="game-icon">🎯</div>
-            <h2>긴장감 룰렛</h2>
-            <p>핀과 맞물리며 천천히 멈추는 룰렛</p>
-            <button class="play-btn" onclick="openPage('roulettePage')">
-                PLAY
-            </button>
-        </div>
+<div class="game-card">
+    <div class="game-icon">🎯</div>
+    <h2>긴장감 룰렛</h2>
+    <p>천천히 돌다가 마지막 순간 결과 결정</p>
+    <button class="play-btn" onclick="openPage('roulettePage')">PLAY</button>
+</div>
 
-        <div class="game-card">
-            <div class="game-icon">🏁</div>
-            <h2>랜덤 경주</h2>
-            <p>누가 먼저 결승선에 도착할까?</p>
-            <button class="play-btn" onclick="openPage('racePage')">
-                PLAY
-            </button>
-        </div>
+<div class="game-card">
+    <div class="game-icon">🏁</div>
+    <h2>역전 경주</h2>
+    <p>앞으로 갔다 뒤로 갔다 마지막까지 모르는 경주</p>
+    <button class="play-btn" onclick="openPage('racePage')">PLAY</button>
+</div>
 
-        <div class="game-card">
-            <div class="game-icon">✊</div>
-            <h2>가위바위보</h2>
-            <p>컴퓨터와 한 판 승부!</p>
-            <button class="play-btn" onclick="openPage('rpsPage')">
-                PLAY
-            </button>
-        </div>
+<div class="game-card">
+    <div class="game-icon">✊</div>
+    <h2>가위바위보</h2>
+    <p>컴퓨터와 한 판 승부</p>
+    <button class="play-btn" onclick="openPage('rpsPage')">PLAY</button>
+</div>
 
-        <div class="game-card">
-            <div class="game-icon">🎲</div>
-            <h2>주사위</h2>
-            <p>랜덤 숫자를 굴려봐</p>
-            <button class="play-btn" onclick="openPage('dicePage')">
-                PLAY
-            </button>
-        </div>
+<div class="game-card">
+    <div class="game-icon">🎲</div>
+    <h2>다면체 주사위</h2>
+    <p>4면부터 20면까지 선택</p>
+    <button class="play-btn" onclick="openPage('dicePage')">PLAY</button>
+</div>
 
-        <div class="game-card">
-            <div class="game-icon">🃏</div>
-            <h2>카드 뽑기</h2>
-            <p>숨겨진 카드 한 장을 뽑아봐</p>
-            <button class="play-btn" onclick="openPage('cardPage')">
-                PLAY
-            </button>
-        </div>
+<div class="game-card">
+    <div class="game-icon">🃏</div>
+    <h2>카드 뽑기</h2>
+    <p>카드 한 장 랜덤 뽑기</p>
+    <button class="play-btn" onclick="openPage('cardPage')">PLAY</button>
+</div>
 
-        <div class="game-card">
-            <div class="game-icon">⚡</div>
-            <h2>타깃 맞히기</h2>
-            <p>10초 동안 최대한 많이 맞혀봐</p>
-            <button class="play-btn" onclick="openPage('targetPage')">
-                PLAY
-            </button>
-        </div>
+<div class="game-card">
+    <div class="game-icon">⚡</div>
+    <h2>타깃 맞히기</h2>
+    <p>빠르게 목표를 클릭</p>
+    <button class="play-btn" onclick="openPage('targetPage')">PLAY</button>
+</div>
 
-    </div>
+<div class="game-card">
+    <div class="game-icon">🃏</div>
+    <h2>단어 짝맞추기</h2>
+    <p>원하는 단어를 직접 입력</p>
+    <button class="play-btn" onclick="openPage('matchPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">⚫</div>
+    <h2>오목</h2>
+    <p>2명이 번갈아 두는 오목</p>
+    <button class="play-btn" onclick="openPage('omokPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">⚪</div>
+    <h2>바둑</h2>
+    <p>돌을 놓고 포위해서 잡는 바둑</p>
+    <button class="play-btn" onclick="openPage('badukPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">♟️</div>
+    <h2>장기</h2>
+    <p>장기판에서 번갈아 두기</p>
+    <button class="play-btn" onclick="openPage('janggiPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">🌍</div>
+    <h2>마블 룰렛</h2>
+    <p>10개의 테마 맵과 특수 함정</p>
+    <button class="play-btn" onclick="openPage('marblePage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">🚀</div>
+    <h2>로켓 발표자</h2>
+    <p>최대 30명 중 발표자 선정</p>
+    <button class="play-btn" onclick="openPage('rocketPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">🍌</div>
+    <h2>원숭이 바나나</h2>
+    <p>원숭이가 고민하다가 바나나 선택</p>
+    <button class="play-btn" onclick="openPage('bananaPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">🪜</div>
+    <h2>사다리 타기</h2>
+    <p>인원 수를 직접 설정</p>
+    <button class="play-btn" onclick="openPage('ladderPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">🎟️</div>
+    <h2>제비뽑기</h2>
+    <p>원하는 개수만큼 제비 만들기</p>
+    <button class="play-btn" onclick="openPage('lotteryPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">📦</div>
+    <h2>상자 뽑기</h2>
+    <p>원하는 개수의 상자 중 하나 선택</p>
+    <button class="play-btn" onclick="openPage('boxPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">🔢</div>
+    <h2>번호 추첨기</h2>
+    <p>최대 20번까지 번호 추첨</p>
+    <button class="play-btn" onclick="openPage('numberPage')">PLAY</button>
+</div>
+
+<div class="game-card">
+    <div class="game-icon">👥</div>
+    <h2>그룹 짜기</h2>
+    <p>원하는 그룹 수로 자동 배정</p>
+    <button class="play-btn" onclick="openPage('groupPage')">PLAY</button>
+</div>
+
+</div>
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
+     RESULT POPUP
+===================================================== -->
+
+<div id="resultOverlay" class="result-overlay hidden">
+
+    <div class="result-popup">
+
+        <div id="resultIcon" class="result-icon">
+            🎉
+        </div>
+
+        <div id="resultTitle" class="result-title">
+            RESULT
+        </div>
+
+        <div id="resultValue" class="result-value">
+            1번
+        </div>
+
+        <div id="resultSub" class="result-sub">
+            결과가 결정됐어!
+        </div>
+
+        <button
+            class="result-close"
+            onclick="closeResultPopup()">
+            확인하고 닫기
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
      ROULETTE
-========================= -->
+===================================================== -->
 
 <section id="roulettePage" class="page hidden">
 
-    <div class="topbar">
+<div class="topbar">
 
-        <button class="back-btn" onclick="goHome()">
-            ← 게임 선택
-        </button>
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
 
-        <div class="topbar-title">
-            🎯 긴장감 룰렛
-        </div>
+<div class="topbar-title">
+    🎯 긴장감 룰렛
+</div>
 
-        <div style="width:80px"></div>
+<div></div>
 
-    </div>
+</div>
 
+<div class="roulette-layout">
 
-    <div class="layout">
+<div class="roulette-box">
 
-        <div class="panel-box roulette-box">
+<div class="wheel-wrapper">
 
-            <div class="wheel-wrapper">
+<canvas id="wheelCanvas"></canvas>
 
-                <canvas id="wheelCanvas"></canvas>
+<div id="pointer" class="pointer"></div>
 
-                <div id="pointer" class="pointer"></div>
+<div class="center-glow"></div>
 
-                <div class="center-glow"></div>
+</div>
 
-            </div>
+</div>
 
-        </div>
+<div class="control-panel">
 
+<h2>룰렛 설정</h2>
 
-        <div class="control-panel">
+<div class="control-group">
 
-            <h2 style="margin-bottom:22px">
-                룰렛 설정
-            </h2>
+<label>칸 수</label>
 
+<div class="number-control">
 
-            <div class="control-group">
+<button onclick="changeSlotCount(-1)">−</button>
 
-                <label>
-                    칸 수
-                </label>
+<input
+    id="slotCount"
+    type="number"
+    min="2"
+    max="30"
+    value="8">
 
-                <div class="number-control">
+<button onclick="changeSlotCount(1)">＋</button>
 
-                    <button onclick="changeSlotCount(-1)">
-                        −
-                    </button>
+</div>
 
-                    <input
-                        id="slotCount"
-                        type="number"
-                        min="2"
-                        max="30"
-                        value="8"
-                        onchange="setSlotCount()"
-                    >
+</div>
 
-                    <button onclick="changeSlotCount(1)">
-                        ＋
-                    </button>
+<div class="control-group">
 
-                </div>
+<label>칸 이름</label>
 
-            </div>
+<div id="labels"></div>
 
+</div>
 
-            <div class="control-group">
+<button
+    id="spinBtn"
+    class="action"
+    onclick="spinRoulette()">
 
-                <label>
-                    칸 이름
-                </label>
+    🎯 돌리기
 
-                <div id="labels"></div>
+</button>
 
-            </div>
+<div id="resultText" class="game-output">
+    -
+</div>
 
+<div id="status" class="status">
+    준비 완료
+</div>
 
-            <button
-                id="spinBtn"
-                class="action"
-                onclick="spinRoulette()"
-            >
-                🎯 돌리기
-            </button>
+</div>
 
-
-            <div class="result">
-
-                <small>
-                    RESULT
-                </small>
-
-                <strong id="resultText">
-                    -
-                </strong>
-
-            </div>
-
-
-            <div
-                id="status"
-                class="status"
-            >
-                준비 완료
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      RACE
-========================= -->
+===================================================== -->
 
 <section id="racePage" class="page hidden">
 
-    <div class="topbar">
+<div class="topbar">
 
-        <button class="back-btn" onclick="goHome()">
-            ← 게임 선택
-        </button>
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
 
-        <div class="topbar-title">
-            🏁 랜덤 경주
-        </div>
+<div class="topbar-title">
+    🏁 역전 경주
+</div>
 
-        <div></div>
+<div></div>
 
-    </div>
+</div>
 
+<div class="panel-box center">
 
-    <div class="panel-box center">
+<h1>🏁 마지막까지 알 수 없다!</h1>
 
-        <h1>
-            🏁 누가 이길까?
-        </h1>
+<div class="race-track">
 
+<div class="race-lane">
+    <span class="lane-label">1번</span>
+    <span id="r1" class="runner">🐢</span>
+</div>
 
-        <div class="race-track">
+<div class="race-lane">
+    <span class="lane-label">2번</span>
+    <span id="r2" class="runner">🐇</span>
+</div>
 
-            <div class="runner">
-                🐢
-                <span id="r1">🐢</span>
-            </div>
+<div class="race-lane">
+    <span class="lane-label">3번</span>
+    <span id="r3" class="runner">🐱</span>
+</div>
 
-            <div class="runner">
-                🐇
-                <span id="r2">🐇</span>
-            </div>
+<div class="race-lane">
+    <span class="lane-label">4번</span>
+    <span id="r4" class="runner">🐶</span>
+</div>
 
-            <div class="runner">
-                🐱
-                <span id="r3">🐱</span>
-            </div>
+</div>
 
-            <div class="runner">
-                🐶
-                <span id="r4">🐶</span>
-            </div>
+<div id="raceResult" class="game-output">
+    준비!
+</div>
 
-        </div>
+<button
+    class="action"
+    onclick="startRace()">
 
+    🏁 경주 시작
 
-        <div
-            id="raceResult"
-            class="game-output"
-        >
-            준비!
-        </div>
+</button>
 
-
-        <button
-            class="action"
-            style="max-width:350px"
-            onclick="startRace()"
-        >
-            🏁 경주 시작
-        </button>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      RPS
-========================= -->
+===================================================== -->
 
 <section id="rpsPage" class="page hidden">
 
-    <div class="topbar">
+<div class="topbar">
 
-        <button class="back-btn" onclick="goHome()">
-            ← 게임 선택
-        </button>
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
 
-        <div class="topbar-title">
-            ✊ 가위바위보
-        </div>
+<div class="topbar-title">
+    ✊ 가위바위보
+</div>
 
-        <div></div>
+<div></div>
 
-    </div>
+</div>
 
+<div class="panel-box center">
 
-    <div class="panel-box center">
+<div class="big-emoji">✊</div>
 
-        <div class="big-emoji">
-            ✊
-        </div>
+<h1>가위바위보!</h1>
 
-        <h1>
-            가위바위보!
-        </h1>
+<div class="choices">
 
+<button onclick="playRps('가위')">✌️</button>
+<button onclick="playRps('바위')">✊</button>
+<button onclick="playRps('보')">🖐️</button>
 
-        <div class="choices">
+</div>
 
-            <button onclick="playRps('가위')">
-                ✌️
-            </button>
+<div id="rpsResult" class="game-output">
+    골라봐!
+</div>
 
-            <button onclick="playRps('바위')">
-                ✊
-            </button>
-
-            <button onclick="playRps('보')">
-                🖐️
-            </button>
-
-        </div>
-
-
-        <div
-            id="rpsResult"
-            class="game-output"
-        >
-            골라봐!
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      DICE
-========================= -->
+===================================================== -->
 
 <section id="dicePage" class="page hidden">
 
-    <div class="topbar">
+<div class="topbar">
 
-        <button class="back-btn" onclick="goHome()">
-            ← 게임 선택
-        </button>
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
 
-        <div class="topbar-title">
-            🎲 주사위
-        </div>
+<div class="topbar-title">
+    🎲 다각형 주사위
+</div>
 
-        <div></div>
+<div></div>
 
-    </div>
+</div>
 
+<div class="panel-box center">
 
-    <div class="panel-box center">
+<h2>몇 면 주사위?</h2>
 
-        <div
-            id="dice"
-            class="dice"
-        >
-            ⚀
-        </div>
+<div class="row" style="max-width:600px;margin:20px auto">
 
+<select id="diceSides">
 
-        <div
-            id="diceResult"
-            class="game-output"
-        >
-            ?
-        </div>
+<option value="4">4면체</option>
+<option value="6" selected>6면체</option>
+<option value="8">8면체</option>
+<option value="10">10면체</option>
+<option value="12">12면체</option>
+<option value="20">20면체</option>
+<option value="30">30면체</option>
+<option value="50">50면체</option>
+<option value="100">100면체</option>
 
+</select>
 
-        <button
-            class="action"
-            style="max-width:350px"
-            onclick="rollDice()"
-        >
-            🎲 굴리기
-        </button>
+</div>
 
-    </div>
+<div id="dice" class="dice">
+    🎲
+</div>
+
+<div id="diceResult" class="game-output">
+    ?
+</div>
+
+<button
+    class="action"
+    onclick="rollDice()">
+
+    🎲 굴리기
+
+</button>
+
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      CARD
-========================= -->
+===================================================== -->
 
 <section id="cardPage" class="page hidden">
 
-    <div class="topbar">
+<div class="topbar">
 
-        <button class="back-btn" onclick="goHome()">
-            ← 게임 선택
-        </button>
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
 
-        <div class="topbar-title">
-            🃏 카드 뽑기
-        </div>
+<div class="topbar-title">
+    🃏 카드 뽑기
+</div>
 
-        <div></div>
+<div></div>
 
-    </div>
+</div>
 
+<div class="panel-box center">
 
-    <div class="panel-box center">
+<div id="card" class="card">
+    ?
+</div>
 
-        <div
-            id="card"
-            class="card"
-        >
-            ?
-        </div>
+<div id="cardResult" class="game-output">
+    카드를 뽑아봐!
+</div>
 
+<button
+    class="action"
+    onclick="drawCard()">
 
-        <div
-            id="cardResult"
-            class="game-output"
-        >
-            카드를 뽑아봐!
-        </div>
+    🃏 뽑기
 
+</button>
 
-        <button
-            class="action"
-            style="max-width:350px"
-            onclick="drawCard()"
-        >
-            🃏 뽑기
-        </button>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      TARGET
-========================= -->
+===================================================== -->
 
 <section id="targetPage" class="page hidden">
 
-    <div class="topbar">
+<div class="topbar">
 
-        <button class="back-btn" onclick="goHome()">
-            ← 게임 선택
-        </button>
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
 
-        <div class="topbar-title">
-            ⚡ 타깃 맞히기
-        </div>
+<div class="topbar-title">
+    ⚡ 타깃 맞히기
+</div>
 
-        <div></div>
+<div></div>
 
+</div>
+
+<div class="panel-box center">
+
+<h1>⚡ 타깃을 눌러!</h1>
+
+<div
+    id="targetArea"
+    class="target-area">
+
+<button
+    id="target"
+    class="target"
+    onclick="hitTarget()">
+</button>
+
+</div>
+
+<div id="targetResult" class="game-output">
+    시작 버튼을 눌러봐!
+</div>
+
+<button
+    class="action"
+    onclick="startTarget()">
+
+    ⚡ 시작
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     MATCHING
+===================================================== -->
+
+<section id="matchPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    🃏 단어 짝맞추기
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>🃏 단어를 직접 정해봐</h1>
+
+<p style="color:var(--muted);margin:12px">
+같은 단어가 2장씩 만들어져.
+</p>
+
+<textarea
+    id="matchWords"
+    rows="4"
+    placeholder="예: 사과, 바나나, 포도, 수박"></textarea>
+
+<button
+    class="action"
+    onclick="startMatching()">
+
+    🃏 게임 만들기
+
+</button>
+
+<div id="matchInfo" class="game-output"></div>
+
+<div id="matchGrid" class="match-grid"></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     OMOK
+===================================================== -->
+
+<section id="omokPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    ⚫ 오목
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>⚫ 오목</h1>
+
+<p style="color:var(--muted);margin:10px">
+흑과 백이 번갈아 돌을 놓아 먼저 5개를 이어보세요.
+</p>
+
+<div id="omokTurn" class="game-output">
+    ⚫ 흑 차례
+</div>
+
+<div class="board-wrap">
+    <div
+        id="omokBoard"
+        class="board omok-board">
     </div>
+</div>
+
+<button
+    class="action"
+    onclick="resetOmok()">
+
+    🔄 다시 시작
+
+</button>
+
+</div>
+
+</section>
 
 
-    <div class="panel-box center">
+<!-- =====================================================
+     BADUK
+===================================================== -->
 
-        <h1>
-            ⚡ 타깃을 눌러!
-        </h1>
+<section id="badukPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    ⚪ 바둑
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>⚪ 바둑</h1>
+
+<p style="color:var(--muted);margin:10px">
+흑과 백이 번갈아 돌을 놓고 상대 돌의 활로를 모두 막으면 잡습니다.
+</p>
+
+<div id="badukTurn" class="game-output">
+    ⚫ 흑 차례
+</div>
+
+<div id="badukScore" style="color:#9ba8c2">
+    흑 0 / 백 0
+</div>
+
+<div class="board-wrap">
+
+<div
+    id="badukBoard"
+    class="board go-board">
+</div>
+
+</div>
+
+<button
+    class="action"
+    onclick="resetBaduk()">
+
+    🔄 다시 시작
+
+</button>
+
+</div>
+
+</section>
 
 
-        <div
-            class="target-area"
-            id="targetArea"
-        >
+<!-- =====================================================
+     JANGGI
+===================================================== -->
 
-            <button
-                id="target"
-                class="target"
-                onclick="hitTarget()"
-            ></button>
+<section id="janggiPage" class="page hidden">
 
-        </div>
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    ♟️ 장기
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>♟️ 장기</h1>
+
+<p style="color:var(--muted);margin:10px">
+기물의 기본 이동 규칙을 적용한 9×10 장기판입니다.
+</p>
+
+<div id="janggiTurn" class="game-output">
+    🔴 초 차례
+</div>
+
+<div class="board-wrap">
+
+<div
+    id="janggiBoard"
+    class="janggi-board">
+</div>
+
+</div>
+
+<button
+    class="action"
+    onclick="resetJanggi()">
+
+    🔄 다시 시작
+
+</button>
+
+</div>
+
+</section>
 
 
-        <div
-            id="targetResult"
-            class="game-output"
-        >
-            시작 버튼을 눌러봐!
-        </div>
+<!-- =====================================================
+     MARBLE
+===================================================== -->
+
+<section id="marblePage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    🌍 마블 룰렛
+</div>
+
+<div></div>
+
+</div>
+
+<div class="marble-layout">
+
+<div class="control-panel" style="margin:0">
+
+<h2>맵 선택</h2>
+
+<div id="mapButtons" class="map-select"></div>
+
+<button
+    class="action"
+    onclick="startMarble()">
+
+    🎲 출발
+
+</button>
+
+</div>
+
+<div
+    id="marbleMap"
+    class="marble-map theme-lava">
+
+<div class="marble-path"></div>
+
+<div id="marbleBall" class="marble"></div>
+
+<div id="marbleTraps"></div>
+
+<div
+    id="marbleStatus"
+    class="game-output"
+    style="position:absolute;bottom:20px;left:30px;right:30px">
+    맵을 선택해봐!
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 
-        <button
-            class="action"
-            style="max-width:350px"
-            onclick="startTarget()"
-        >
-            ⚡ 시작
-        </button>
+<!-- =====================================================
+     ROCKET
+===================================================== -->
 
-    </div>
+<section id="rocketPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    🚀 로켓 발표자 선정
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>🚀 발표자 선정</h1>
+
+<p style="color:var(--muted);margin:10px">
+최대 30명까지 가능합니다.
+</p>
+
+<div class="control-panel">
+
+<label>참가자 수</label>
+
+<input
+    id="rocketCount"
+    type="number"
+    min="2"
+    max="30"
+    value="10"
+    onchange="makeRocketInputs()">
+
+<div id="rocketInputs"></div>
+
+</div>
+
+<div
+    id="rocketStage"
+    class="rocket-stage">
+
+<div id="rocket" class="rocket">
+    🚀
+</div>
+
+</div>
+
+<button
+    class="action"
+    onclick="launchRocket()">
+
+    🚀 발사해서 선정
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     BANANA
+===================================================== -->
+
+<section id="bananaPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    🍌 원숭이 바나나
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>🍌 원숭이 발표자 선정</h1>
+
+<p style="color:var(--muted);margin:10px">
+원숭이가 고민하고 왔다 갔다 하다가 하나를 선택합니다.
+</p>
+
+<div class="row">
+
+<input
+    id="bananaCount"
+    type="number"
+    min="2"
+    max="30"
+    value="10">
+
+<button
+    class="play-btn"
+    onclick="createBananas()">
+
+    바나나 만들기
+
+</button>
+
+</div>
+
+<div
+    id="bananaStage"
+    class="banana-stage">
+
+<div id="bananas" class="bananas"></div>
+
+<div id="monkey" class="monkey">
+    🐒
+</div>
+
+</div>
+
+<button
+    class="action"
+    onclick="monkeyChoose()">
+
+    🐒 원숭이에게 맡기기
+
+</button>
+
+<div id="bananaStatus" class="game-output">
+    바나나를 만들어봐!
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     LADDER
+===================================================== -->
+
+<section id="ladderPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    🪜 사다리 타기
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>🪜 사다리 타기</h1>
+
+<div class="row">
+
+<input
+    id="ladderCount"
+    type="number"
+    min="2"
+    max="20"
+    value="6">
+
+<button
+    class="play-btn"
+    onclick="createLadder()">
+
+    사다리 만들기
+
+</button>
+
+</div>
+
+<div
+    id="ladderBoard"
+    class="ladder-board">
+
+</div>
+
+<button
+    class="action"
+    onclick="runLadder()">
+
+    🪜 타기
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     LOTTERY
+===================================================== -->
+
+<section id="lotteryPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    🎟️ 제비뽑기
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>🎟️ 제비뽑기</h1>
+
+<div class="row">
+
+<input
+    id="lotteryCount"
+    type="number"
+    min="2"
+    max="50"
+    value="10">
+
+<button
+    class="play-btn"
+    onclick="createLottery()">
+
+    제비 만들기
+
+</button>
+
+</div>
+
+<div
+    id="lotteryGrid"
+    class="box-grid">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     BOX
+===================================================== -->
+
+<section id="boxPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    📦 상자 뽑기
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>📦 상자 뽑기</h1>
+
+<div class="row">
+
+<input
+    id="boxCount"
+    type="number"
+    min="2"
+    max="50"
+    value="12">
+
+<button
+    class="play-btn"
+    onclick="createBoxes()">
+
+    상자 만들기
+
+</button>
+
+</div>
+
+<div id="boxGrid" class="box-grid"></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     NUMBER DRAW
+===================================================== -->
+
+<section id="numberPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    🔢 무작위 번호 추첨
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>🔢 번호 추첨기</h1>
+
+<div class="control-panel">
+
+<label>최대 번호</label>
+
+<input
+    id="numberMax"
+    type="number"
+    min="2"
+    value="30">
+
+<label style="margin-top:15px">
+    추첨 횟수
+</label>
+
+<input
+    id="numberTimes"
+    type="number"
+    min="1"
+    max="20"
+    value="5">
+
+</div>
+
+<button
+    class="action"
+    onclick="drawNumbers()">
+
+    🔢 추첨 시작
+
+</button>
+
+<div
+    id="numberResults"
+    class="number-results">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     GROUP
+===================================================== -->
+
+<section id="groupPage" class="page hidden">
+
+<div class="topbar">
+
+<button class="back-btn" onclick="goHome()">
+    ← 게임 선택
+</button>
+
+<div class="topbar-title">
+    👥 그룹 짜기
+</div>
+
+<div></div>
+
+</div>
+
+<div class="panel-box center">
+
+<h1>👥 그룹 자동 배정</h1>
+
+<textarea
+    id="groupMembers"
+    rows="6"
+    placeholder="참가자를 쉼표 또는 줄바꿈으로 입력&#10;예: 철수, 영희, 민수, 세현"></textarea>
+
+<div class="row" style="margin-top:15px">
+
+<input
+    id="groupCount"
+    type="number"
+    min="2"
+    max="20"
+    value="2">
+
+<button
+    class="play-btn"
+    onclick="makeGroups()">
+
+    👥 그룹 짜기
+
+</button>
+
+</div>
+
+<div id="groupResult" class="group-grid"></div>
+
+</div>
 
 </section>
 
@@ -1124,7 +2681,7 @@ button{
 <script>
 
 /* =====================================================
-   PAGE
+   GLOBAL
 ===================================================== */
 
 const pages = [
@@ -1133,38 +2690,250 @@ const pages = [
     "rpsPage",
     "dicePage",
     "cardPage",
-    "targetPage"
+    "targetPage",
+    "matchPage",
+    "omokPage",
+    "badukPage",
+    "janggiPage",
+    "marblePage",
+    "rocketPage",
+    "bananaPage",
+    "ladderPage",
+    "lotteryPage",
+    "boxPage",
+    "numberPage",
+    "groupPage"
 ];
 
-const home = document.getElementById("home");
+let resultPopupOpen = false;
 
 function openPage(id){
 
-    home.classList.add("hidden");
+    document.getElementById("home")
+        .classList.add("hidden");
 
-    pages.forEach(page=>{
-        document.getElementById(page).classList.add("hidden");
+    pages.forEach(p=>{
+        document.getElementById(p)
+            .classList.add("hidden");
     });
 
-    document.getElementById(id).classList.remove("hidden");
+    document.getElementById(id)
+        .classList.remove("hidden");
+
+    startBGM(id);
 
     if(id === "roulettePage"){
-        setTimeout(()=>{
-            resizeCanvas();
-            drawWheel();
-        },50);
+        resizeCanvas();
+        createLabels();
+        drawWheel();
+    }
+
+    if(id === "omokPage"){
+        resetOmok();
+    }
+
+    if(id === "badukPage"){
+        resetBaduk();
+    }
+
+    if(id === "janggiPage"){
+        resetJanggi();
+    }
+
+    if(id === "marblePage"){
+        createMapButtons();
+        selectMap(currentMap);
+    }
+
+    if(id === "rocketPage"){
+        makeRocketInputs();
     }
 }
 
 function goHome(){
 
-    if(spinning) return;
+    if(spinning || raceRunning){
+        return;
+    }
 
-    pages.forEach(page=>{
-        document.getElementById(page).classList.add("hidden");
+    pages.forEach(p=>{
+        document.getElementById(p)
+            .classList.add("hidden");
     });
 
-    home.classList.remove("hidden");
+    document.getElementById("home")
+        .classList.remove("hidden");
+
+    stopBGM();
+}
+
+
+/* =====================================================
+   RESULT
+===================================================== */
+
+function showResultPopup(
+    value,
+    sub="결과가 결정됐어!",
+    icon="🎉",
+    title="RESULT"
+){
+
+    document.getElementById("resultIcon")
+        .textContent=icon;
+
+    document.getElementById("resultTitle")
+        .textContent=title;
+
+    document.getElementById("resultValue")
+        .textContent=value;
+
+    document.getElementById("resultSub")
+        .textContent=sub;
+
+    document.getElementById("resultOverlay")
+        .classList.remove("hidden");
+
+    resultPopupOpen=true;
+
+    playTone(880,.12);
+    setTimeout(()=>playTone(1100,.18),130);
+}
+
+function closeResultPopup(){
+
+    document.getElementById("resultOverlay")
+        .classList.add("hidden");
+
+    resultPopupOpen=false;
+}
+
+
+/* =====================================================
+   AUDIO / GAME BGM
+===================================================== */
+
+let audioCtx=null;
+let bgmTimer=null;
+let bgmGain=null;
+
+const bgmPatterns={
+    roulette:[220,277,330,277],
+    race:[165,196,220,247],
+    rps:[330,392,494],
+    dice:[262,330,392],
+    card:[294,370,440],
+    target:[440,660,880],
+    match:[262,330,392,523],
+    omok:[196,247,294],
+    baduk:[174,220,261],
+    janggi:[147,185,220],
+    marble:[110,147,196,247],
+    rocket:[196,294,392,587],
+    banana:[220,330,277,370],
+    ladder:[262,294,330,392],
+    lottery:[330,370,440],
+    box:[196,247,294],
+    number:[330,440,550],
+    group:[247,294,370,440]
+};
+
+function ensureAudio(){
+
+    if(!audioCtx){
+
+        audioCtx=
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+    if(audioCtx.state==="suspended"){
+        audioCtx.resume();
+    }
+}
+
+function playTone(freq,duration=.12){
+
+    try{
+
+        ensureAudio();
+
+        const osc=
+            audioCtx.createOscillator();
+
+        const gain=
+            audioCtx.createGain();
+
+        osc.type="sine";
+        osc.frequency.value=freq;
+
+        gain.gain.setValueAtTime(
+            .0001,
+            audioCtx.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .04,
+            audioCtx.currentTime+.02
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            audioCtx.currentTime+duration
+        );
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(
+            audioCtx.currentTime+duration+.03
+        );
+
+    }catch(e){}
+}
+
+function startBGM(page){
+
+    stopBGM();
+
+    const key=page.replace("Page","");
+
+    const pattern=
+        bgmPatterns[key] ||
+        [220,330,440];
+
+    try{
+
+        ensureAudio();
+
+        let i=0;
+
+        bgmTimer=setInterval(()=>{
+
+            playTone(
+                pattern[i%pattern.length],
+                .16
+            );
+
+            i++;
+
+        },700);
+
+    }catch(e){}
+}
+
+function stopBGM(){
+
+    if(bgmTimer){
+
+        clearInterval(bgmTimer);
+        bgmTimer=null;
+
+    }
 }
 
 
@@ -1172,144 +2941,113 @@ function goHome(){
    ROULETTE
 ===================================================== */
 
-const canvas =
+const canvas=
     document.getElementById("wheelCanvas");
 
-const ctx =
+const ctx=
     canvas.getContext("2d");
 
-const pointer =
-    document.getElementById("pointer");
-
-const slotInput =
+const slotInput=
     document.getElementById("slotCount");
 
-const labelsBox =
+const labelsBox=
     document.getElementById("labels");
 
-const spinBtn =
+const spinBtn=
     document.getElementById("spinBtn");
 
-const resultText =
+const resultText=
     document.getElementById("resultText");
 
-const statusText =
+const statusText=
     document.getElementById("status");
 
-
-let slotCount = 8;
-
-let labels = [];
-
-let currentRotation = 0;
-
-let spinning = false;
-
-let lastBoundary = null;
-
-
-/* -------------------------
-   Canvas
-------------------------- */
+let slotCount=8;
+let labels=[];
+let currentRotation=0;
+let spinning=false;
+let lastBoundary=null;
 
 function resizeCanvas(){
 
-    const rect =
+    const rect=
         canvas.getBoundingClientRect();
 
-    const size =
+    const s=
         Math.min(
             rect.width || 600,
             rect.height || 600
         );
 
-    const dpr =
+    const d=
         window.devicePixelRatio || 1;
 
-    canvas.width =
-        size * dpr;
-
-    canvas.height =
-        size * dpr;
+    canvas.width=s*d;
+    canvas.height=s*d;
 
     ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
+        d,0,0,d,0,0
     );
 
     drawWheel();
 }
 
-
-/* -------------------------
-   Labels
-------------------------- */
-
 function createLabels(){
 
-    labelsBox.innerHTML = "";
-
-    labels = [];
+    labelsBox.innerHTML="";
+    labels=[];
 
     for(let i=0;i<slotCount;i++){
 
-        labels.push(
-            "선택 " + (i+1)
-        );
+        labels.push("선택 "+(i+1));
 
-        const row =
+        const row=
             document.createElement("div");
 
-        row.className =
-            "label-row";
+        row.style.display="flex";
+        row.style.gap="8px";
+        row.style.marginBottom="7px";
 
-        row.innerHTML = `
-            <span class="label-number">
-                ${i+1}
+        row.innerHTML=`
+            <span style="
+                width:30px;
+                display:flex;
+                align-items:center;
+                color:#8e9ab5
+            ">
+                ${i+1}번
             </span>
 
             <input
                 value="선택 ${i+1}"
-                maxlength="20"
-            >
+                maxlength="20">
         `;
 
-        const input =
-            row.querySelector("input");
+        row.querySelector("input")
+            .oninput=e=>{
 
-        input.addEventListener(
-            "input",
-            e=>{
-                labels[i] =
-                    e.target.value || "선택";
+                labels[i]=
+                    e.target.value ||
+                    "선택";
 
                 drawWheel();
-            }
-        );
+
+            };
 
         labelsBox.appendChild(row);
     }
 }
 
+function changeSlotCount(n){
 
-/* -------------------------
-   Slot count
-------------------------- */
+    if(spinning)return;
 
-function changeSlotCount(amount){
-
-    if(spinning) return;
-
-    slotInput.value =
+    slotInput.value=
         Math.max(
             2,
             Math.min(
                 30,
-                Number(slotInput.value)+amount
+                Number(slotInput.value)+n
             )
         );
 
@@ -1318,127 +3056,82 @@ function changeSlotCount(amount){
 
 function setSlotCount(){
 
-    if(spinning) return;
+    if(spinning)return;
 
-    slotCount =
+    slotCount=
         Math.max(
             2,
             Math.min(
                 30,
                 Math.round(
-                    Number(slotInput.value) || 8
-                )
+                    Number(slotInput.value)
+                ) || 8
             )
         );
 
-    slotInput.value =
-        slotCount;
+    slotInput.value=slotCount;
 
     createLabels();
-
     drawWheel();
 }
 
+function normalize(a){
 
-/* -------------------------
-   Angle
-------------------------- */
+    a%=Math.PI*2;
 
-function normalizeAngle(angle){
-
-    angle %= Math.PI * 2;
-
-    if(angle < 0){
-        angle += Math.PI * 2;
-    }
-
-    return angle;
+    return a<0
+        ? a+Math.PI*2
+        : a;
 }
-
-
-/* -------------------------
-   Wheel drawing
-------------------------- */
 
 function drawWheel(){
 
-    if(!canvas.width) return;
+    if(!canvas.width)return;
 
-    const rect =
+    const rect=
         canvas.getBoundingClientRect();
 
-    const size =
+    const s=
         Math.min(
             rect.width,
             rect.height
         );
 
-    if(!size) return;
+    if(!s)return;
 
-    const cx = size / 2;
-    const cy = size / 2;
+    const cx=s/2;
+    const cy=s/2;
 
-    const radius =
-        size * .39;
+    const rad=s*.39;
 
-    ctx.clearRect(
-        0,
-        0,
-        size,
-        size
-    );
+    ctx.clearRect(0,0,s,s);
 
     ctx.save();
 
     ctx.translate(cx,cy);
-
     ctx.rotate(currentRotation);
 
+    const slice=
+        Math.PI*2/slotCount;
 
-    /* shadow */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        radius + 18,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle =
-        "rgba(0,0,0,.48)";
-
-    ctx.fill();
-
-
-    const colors = [
-        "#d84d5a",
-        "#496ee8",
-        "#e49a38",
-        "#46a66d",
-        "#8b5bd6",
-        "#d05b9b",
-        "#4c9fc8",
-        "#c96d3f"
+    const colors=[
+        "#245cff",
+        "#7c4dff",
+        "#00a9a9",
+        "#e34c72",
+        "#d08b24",
+        "#3b8b5d",
+        "#4a69bd",
+        "#9c4dcc"
     ];
-
-
-    const slice =
-        Math.PI * 2 / slotCount;
-
-
-    /* slices */
 
     for(let i=0;i<slotCount;i++){
 
-        const start =
-            -Math.PI/2 + i * slice;
+        const a0=
+            -Math.PI/2+i*slice;
 
-        const end =
-            start + slice;
-
+        const a1=
+            a0+slice;
 
         ctx.beginPath();
 
@@ -1447,544 +3140,597 @@ function drawWheel(){
         ctx.arc(
             0,
             0,
-            radius,
-            start,
-            end
+            rad,
+            a0,
+            a1
         );
 
         ctx.closePath();
 
-        ctx.fillStyle =
-            colors[i % colors.length];
+        ctx.fillStyle=
+            colors[i%colors.length];
 
         ctx.fill();
 
-
-        ctx.lineWidth = 3;
-
-        ctx.strokeStyle =
-            "rgba(255,255,255,.22)";
+        ctx.lineWidth=2;
+        ctx.strokeStyle=
+            "rgba(255,255,255,.18)";
 
         ctx.stroke();
 
-
-        /* text */
+        const mid=
+            a0+slice/2;
 
         ctx.save();
 
-        ctx.rotate(
-            start + slice/2
+        ctx.rotate(mid);
+
+        ctx.translate(
+            rad*.67,
+            0
         );
 
-        ctx.textAlign =
-            "center";
+        ctx.rotate(Math.PI/2);
 
-        ctx.textBaseline =
-            "middle";
+        ctx.fillStyle="white";
 
-        ctx.font =
-            `900 ${Math.max(
-                11,
-                Math.min(
-                    20,
-                    250 / slotCount
-                )
-            )}px Arial`;
+        ctx.font=
+            "bold "+Math.max(
+                12,
+                Math.min(22,s*.035)
+            )+"px Arial";
 
-        ctx.fillStyle =
-            "white";
-
-        ctx.shadowColor =
-            "rgba(0,0,0,.55)";
-
-        ctx.shadowBlur = 5;
-
-
-        let text =
-            labels[i] ||
-            "선택 " + (i+1);
-
-
-        const max =
-            slotCount >= 20
-                ? 5
-                : 8;
-
-
-        if(text.length > max){
-            text =
-                text.substring(0,max) + "…";
-        }
-
+        ctx.textAlign="center";
 
         ctx.fillText(
-            text,
-            radius * .67,
+            (i+1)+"번",
+            0,
             0
         );
 
         ctx.restore();
     }
 
-
-    /* gold rim */
-
     ctx.beginPath();
-
     ctx.arc(
         0,
         0,
-        radius,
+        rad,
         0,
-        Math.PI * 2
+        Math.PI*2
     );
 
-    ctx.lineWidth = 9;
-
-    ctx.strokeStyle =
-        "#d8b75b";
-
+    ctx.lineWidth=4;
+    ctx.strokeStyle="#fff";
     ctx.stroke();
-
-
-    /* inner rim */
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        radius - 12,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.lineWidth = 2;
-
-    ctx.strokeStyle =
-        "rgba(255,255,255,.18)";
-
-    ctx.stroke();
-
 
     ctx.restore();
-
 
     drawPegs(
         cx,
         cy,
-        radius,
-        size
+        rad,
+        s
     );
 }
 
+function drawPegs(cx,cy,rad,s){
 
-/* -------------------------
-   Outside pins
-------------------------- */
+    const pr=
+        Math.max(5,s*.012);
 
-function drawPegs(
-    cx,
-    cy,
-    radius,
-    size
-){
+    const dist=
+        rad+16;
 
-    const pinRadius =
-        Math.max(
-            5,
-            size * .012
-        );
-
-    const distance =
-        radius + 16;
-
-    const slice =
-        Math.PI * 2 / slotCount;
-
+    const slice=
+        Math.PI*2/slotCount;
 
     ctx.save();
 
     ctx.translate(cx,cy);
-
     ctx.rotate(currentRotation);
-
 
     for(let i=0;i<slotCount;i++){
 
-        const angle =
-            -Math.PI/2 + i * slice;
+        const a=
+            -Math.PI/2+i*slice;
 
-        const x =
-            Math.cos(angle) * distance;
+        const x=
+            Math.cos(a)*dist;
 
-        const y =
-            Math.sin(angle) * distance;
-
-
-        /* shadow */
+        const y=
+            Math.sin(a)*dist;
 
         ctx.beginPath();
 
         ctx.arc(
             x+2,
             y+3,
-            pinRadius+2,
+            pr+2,
             0,
             Math.PI*2
         );
 
-        ctx.fillStyle =
+        ctx.fillStyle=
             "rgba(0,0,0,.55)";
 
         ctx.fill();
-
-
-        /* pin */
 
         ctx.beginPath();
 
         ctx.arc(
             x,
             y,
-            pinRadius,
+            pr,
             0,
             Math.PI*2
         );
 
-        ctx.fillStyle =
-            "#d7b85c";
-
+        ctx.fillStyle="#d7b85c";
         ctx.fill();
 
-        ctx.lineWidth = 2;
-
-        ctx.strokeStyle =
-            "rgba(255,255,255,.6)";
-
-        ctx.stroke();
     }
 
     ctx.restore();
 }
 
-
-/* -------------------------
-   Pointer hit
-------------------------- */
-
 function pointerHit(){
 
-    pointer.classList.remove("hit");
+    const p=
+        document.getElementById("pointer");
 
-    void pointer.offsetWidth;
-
-    pointer.classList.add("hit");
+    p.style.transform=
+        "translateX(-50%) scale(1.25)";
 
     setTimeout(()=>{
-        pointer.classList.remove("hit");
-    },200);
+        p.style.transform=
+            "translateX(-50%)";
+    },120);
 }
 
+function easeRoulette(t){
 
-/* -------------------------
-   Detect pins
-------------------------- */
+    if(t<.62){
 
-function checkHits(rotation){
+        const x=t/.62;
 
-    const slice =
-        Math.PI * 2 / slotCount;
+        return .80*
+            (1-Math.pow(1-x,2.3));
 
-    const boundary =
-        Math.round(
-            normalizeAngle(-rotation) / slice
-        );
-
-
-    if(
-        lastBoundary !== null &&
-        boundary !== lastBoundary
-    ){
-
-        pointerHit();
     }
 
-    lastBoundary =
-        boundary;
+    const x=
+        (t-.62)/.38;
+
+    return .80+
+        .20*
+        (1-Math.pow(1-x,4.5));
 }
-
-
-/* -------------------------
-   Long slow ending
-------------------------- */
-
-function rouletteEase(t){
-
-    /*
-       초반:
-       빠르게 회전
-
-       중반:
-       조금씩 감속
-
-       후반:
-       아주 천천히 핀과 맞물림
-    */
-
-    if(t < .58){
-
-        const x =
-            t / .58;
-
-        return .76 *
-            (
-                1 -
-                Math.pow(
-                    1-x,
-                    2.15
-                )
-            );
-    }
-
-
-    const x =
-        (t-.58) / .42;
-
-
-    return .76 +
-        .24 *
-        (
-            1 -
-            Math.pow(
-                1-x,
-                5.5
-            )
-        );
-}
-
-
-/* -------------------------
-   Spin
-------------------------- */
 
 function spinRoulette(){
 
-    if(spinning) return;
+    if(spinning)return;
 
-    spinning = true;
+    spinning=true;
 
-    spinBtn.disabled = true;
+    spinBtn.disabled=true;
 
-    resultText.textContent =
-        "...";
+    resultText.textContent="...";
+    statusText.textContent=
+        "천천히 돌아가는 중...";
 
-    statusText.textContent =
-        "룰렛이 돌아가는 중...";
-
-
-    pointer.classList.remove(
-        "hit"
-    );
-
-    lastBoundary = null;
-
-
-    const targetIndex =
+    const target=
         Math.floor(
-            Math.random() * slotCount
+            Math.random()*slotCount
         );
 
+    const slice=
+        Math.PI*2/slotCount;
 
-    const slice =
-        Math.PI * 2 / slotCount;
+    const turns=
+        9+Math.random()*3;
 
+    const delta=
+        turns*Math.PI*2-
+        target*slice;
 
-    /*
-       충분히 여러 바퀴
-    */
+    const start=currentRotation;
+    const final=start+delta;
 
-    const turns =
-        9 + Math.random() * 2.5;
+    const duration=
+        9000+
+        Math.random()*2200;
 
-
-    const delta =
-        turns * Math.PI * 2
-        -
-        targetIndex * slice;
-
-
-    const start =
-        currentRotation;
-
-
-    const finalRotation =
-        start + delta;
-
-
-    /*
-       9.5~11초
-       마지막 감속을 길게
-    */
-
-    const duration =
-        9500 +
-        Math.random() * 1500;
-
-
-    const startTime =
+    const t0=
         performance.now();
-
 
     function frame(now){
 
-        const progress =
+        const p=
             Math.min(
                 1,
-                (now-startTime) / duration
+                (now-t0)/duration
             );
 
-
-        const eased =
-            rouletteEase(progress);
-
-
-        currentRotation =
-            start +
-            (finalRotation-start) *
-            eased;
-
+        currentRotation=
+            start+
+            (final-start)*
+            easeRoulette(p);
 
         drawWheel();
 
-        checkHits(
-            currentRotation
-        );
+        if(
+            p<1
+        ){
 
+            if(
+                Math.random()<.08
+            ){
+                pointerHit();
+            }
 
-        if(progress < 1){
-
-            requestAnimationFrame(
-                frame
-            );
+            requestAnimationFrame(frame);
 
         }else{
 
-            currentRotation =
-                finalRotation;
+            currentRotation=final;
 
             drawWheel();
 
             pointerHit();
 
+            spinning=false;
 
-            spinning = false;
+            spinBtn.disabled=false;
 
-            spinBtn.disabled =
-                false;
+            const value=
+                labels[target] ||
+                "선택 "+(target+1);
 
+            resultText.textContent=value;
 
-            resultText.textContent =
-                labels[targetIndex] ||
-                "선택 " + (targetIndex+1);
-
-
-            statusText.textContent =
+            statusText.textContent=
                 "결과가 결정됐어!";
+
+            showResultPopup(
+                (target+1)+"번",
+                value,
+                "🎯",
+                "룰렛 결과"
+            );
         }
     }
-
 
     requestAnimationFrame(frame);
 }
-
-
-window.addEventListener(
-    "resize",
-    ()=>{
-        if(
-            !document
-            .getElementById("roulettePage")
-            .classList.contains("hidden")
-        ){
-            resizeCanvas();
-        }
-    }
-);
 
 
 /* =====================================================
    RACE
 ===================================================== */
 
+let raceRunning=false;
+
 function startRace(){
 
-    const runners = [
+    if(raceRunning)return;
+
+    raceRunning=true;
+
+    const ids=[
         "r1",
         "r2",
         "r3",
         "r4"
     ];
 
+    const names=[
+        "1번 🐢",
+        "2번 🐇",
+        "3번 🐱",
+        "4번 🐶"
+    ];
 
-    runners.forEach(id=>{
-        document.getElementById(id)
-            .style.left = "0%";
-    });
-
-
-    const result =
-        document.getElementById(
-            "raceResult"
+    const runners=
+        ids.map(
+            id=>document.getElementById(id)
         );
 
+    const result=
+        document.getElementById("raceResult");
 
-    result.textContent =
-        "3... 2... 1... 출발!";
+    const positions=[
+        0,0,0,0
+    ];
 
+    runners.forEach(r=>{
+        r.style.left="0%";
+    });
+
+    result.textContent="준비...";
+
+    let lastLeader=-1;
+
+    setTimeout(()=>{
+        result.textContent="3...";
+    },700);
+
+    setTimeout(()=>{
+        result.textContent="2...";
+    },1400);
+
+    setTimeout(()=>{
+        result.textContent="1...";
+    },2100);
 
     setTimeout(()=>{
 
-        const winner =
-            Math.floor(
-                Math.random() * 4
-            );
+        result.textContent="🏁 출발!";
 
+        const start=
+            performance.now();
 
-        const names = [
-            "🐢 거북이",
-            "🐇 토끼",
-            "🐱 고양이",
-            "🐶 강아지"
-        ];
+        let last=start;
 
+        const duration=15000;
 
-        runners.forEach(
-            (id,index)=>{
+        function frame(now){
 
-                const distance =
-                    index === winner
-                        ? 90
-                        : 55 + Math.random()*27;
+            const elapsed=
+                now-start;
 
+            const dt=
+                Math.min(
+                    40,
+                    now-last
+                );
 
-                document.getElementById(id)
-                    .style.left =
-                    distance + "%";
+            last=now;
+
+            const progress=
+                Math.min(
+                    1,
+                    elapsed/duration
+                );
+
+            let base;
+
+            if(progress<.18){
+                base=.16;
+            }else if(progress<.45){
+                base=.25;
+            }else if(progress<.7){
+                base=.32;
+            }else if(progress<.87){
+                base=.42;
+            }else{
+                base=.58;
             }
+
+            for(let i=0;i<4;i++){
+
+                let move=
+                    base*
+                    (.82+Math.random()*.35)*
+                    dt/16;
+
+                /*
+                    순간 가속
+                */
+
+                if(Math.random()<.012){
+                    move*=2.4;
+                }
+
+                /*
+                    미끄러지듯 뒤로
+                */
+
+                if(
+                    Math.random()<.022 &&
+                    positions[i]>3
+                ){
+                    move-=
+                        .25+
+                        Math.random()*.75;
+                }
+
+                /*
+                    중간에 크게 느려지는 순간
+                */
+
+                if(Math.random()<.009){
+                    move*=.15;
+                }
+
+                positions[i]+=move;
+
+                /*
+                    너무 멀리 앞서면
+                    뒤에서 따라잡을 수 있도록
+                    아주 살짝 억제
+                */
+
+                if(
+                    progress>.3 &&
+                    progress<.84
+                ){
+
+                    const avg=
+                        positions.reduce(
+                            (a,b)=>a+b,
+                            0
+                        )/4;
+
+                    if(
+                        positions[i]>
+                        avg+12
+                    ){
+                        positions[i]-=.08;
+                    }
+                }
+
+                positions[i]=
+                    Math.max(
+                        0,
+                        Math.min(
+                            92,
+                            positions[i]
+                        )
+                    );
+
+                runners[i].style.left=
+                    positions[i]+"%";
+            }
+
+            const ranking=
+                positions
+                    .map(
+                        (p,i)=>({
+                            p,
+                            i
+                        })
+                    )
+                    .sort(
+                        (a,b)=>b.p-a.p
+                    );
+
+            const leader=
+                ranking[0].i;
+
+            const gap=
+                ranking[0].p-
+                ranking[1].p;
+
+            if(
+                leader!==lastLeader &&
+                progress>.2
+            ){
+
+                if(lastLeader!==-1){
+
+                    result.textContent=
+                        "🔥 "+names[leader]+
+                        " 추월!";
+
+                    playTone(600,.1);
+                }
+
+                lastLeader=leader;
+            }
+
+            if(
+                gap<2.5 &&
+                progress>.45
+            ){
+
+                result.textContent=
+                    "😱 거의 동시에 들어옵니다!";
+
+            }else if(
+                Math.random()<.018 &&
+                progress>.4
+            ){
+
+                const messages=[
+                    "⚡ 순위가 또 바뀝니다!",
+                    "🔥 뒤에서 엄청나게 따라옵니다!",
+                    "😨 1위가 흔들립니다!",
+                    "🚀 역전 성공!",
+                    "⚠️ 아직 아무도 모릅니다!",
+                    "🏁 결승선이 보입니다!"
+                ];
+
+                result.textContent=
+                    messages[
+                        Math.floor(
+                            Math.random()*
+                            messages.length
+                        )
+                    ];
+            }
+
+            if(progress<1){
+
+                requestAnimationFrame(frame);
+
+            }else{
+
+                finishRace();
+
+            }
+        }
+
+        requestAnimationFrame(frame);
+
+    },2800);
+}
+
+function finishRace(){
+
+    const ids=[
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+    ];
+
+    const runners=
+        ids.map(
+            id=>document.getElementById(id)
         );
 
+    const current=
+        runners.map(
+            r=>parseFloat(r.style.left)||0
+        );
+
+    let ranking=
+        current
+            .map(
+                (p,i)=>({
+                    p,
+                    i
+                })
+            )
+            .sort(
+                (a,b)=>b.p-a.p
+            );
+
+    const winner=
+        ranking[0].i;
+
+    document.getElementById(
+        "raceResult"
+    ).textContent=
+        "🔥 마지막 스퍼트!";
+
+    setTimeout(()=>{
+
+        runners[winner].style.left="95%";
 
         setTimeout(()=>{
 
-            result.textContent =
-                "🏆 " +
-                names[winner] +
-                " 승리!";
+            raceRunning=false;
 
-        },2400);
+            const name=
+                (winner+1)+"번";
 
-    },500);
+            document.getElementById(
+                "raceResult"
+            ).textContent=
+                "🏆 "+name+" 우승!";
+
+            showResultPopup(
+                name,
+                "마지막 순간 최종 우승!",
+                "🏆",
+                "RACE RESULT"
+            );
+
+        },800);
+
+    },700);
 }
 
 
@@ -1992,54 +3738,46 @@ function startRace(){
    RPS
 ===================================================== */
 
-function playRps(me){
+function playRps(user){
 
-    const choices = [
+    const choices=[
         "가위",
         "바위",
         "보"
     ];
 
-
-    const computer =
+    const cpu=
         choices[
             Math.floor(
-                Math.random() *
-                choices.length
+                Math.random()*3
             )
         ];
 
-
     let result;
 
-
-    if(me === computer){
-
-        result =
-            "😐 무승부!";
-
+    if(user===cpu){
+        result="무승부!";
     }else if(
-
-        (me === "가위" && computer === "보") ||
-        (me === "바위" && computer === "가위") ||
-        (me === "보" && computer === "바위")
-
+        (user==="가위"&&cpu==="보")||
+        (user==="바위"&&cpu==="가위")||
+        (user==="보"&&cpu==="바위")
     ){
-
-        result =
-            "🎉 네가 이겼어!";
-
+        result="네가 이겼어!";
     }else{
-
-        result =
-            "😵 컴퓨터 승리!";
+        result="컴퓨터 승!";
     }
-
 
     document.getElementById(
         "rpsResult"
-    ).textContent =
-        `너: ${me} / 컴퓨터: ${computer} → ${result}`;
+    ).textContent=
+        `나: ${user} / 컴퓨터: ${cpu} → ${result}`;
+
+    playTone(
+        result==="네가 이겼어!"
+            ? 880
+            : 440,
+        .2
+    );
 }
 
 
@@ -2049,36 +3787,57 @@ function playRps(me){
 
 function rollDice(){
 
-    const number =
-        Math.floor(
-            Math.random() * 6
-        ) + 1;
-
-
-    const faces = [
-        "⚀",
-        "⚁",
-        "⚂",
-        "⚃",
-        "⚄",
-        "⚅"
-    ];
-
-
-    const dice =
-        document.getElementById(
-            "dice"
+    const sides=
+        Number(
+            document.getElementById(
+                "diceSides"
+            ).value
         );
 
+    const result=
+        Math.floor(
+            Math.random()*sides
+        )+1;
 
-    dice.textContent =
-        faces[number-1];
+    const dice=
+        document.getElementById("dice");
 
+    dice.textContent="🎲";
 
-    document.getElementById(
-        "diceResult"
-    ).textContent =
-        number + "이 나왔어!";
+    let count=0;
+
+    const timer=
+        setInterval(()=>{
+
+            dice.textContent=
+                Math.floor(
+                    Math.random()*sides
+                )+1;
+
+            count++;
+
+            if(count>12){
+
+                clearInterval(timer);
+
+                dice.textContent=
+                    result;
+
+                document.getElementById(
+                    "diceResult"
+                ).textContent=
+                    `${sides}면체 → ${result}`;
+
+                showResultPopup(
+                    result+"번",
+                    `${sides}면체 주사위`,
+                    "🎲",
+                    "DICE RESULT"
+                );
+
+            }
+
+        },70);
 }
 
 
@@ -2088,63 +3847,48 @@ function rollDice(){
 
 function drawCard(){
 
-    const suits = [
+    const suits=[
         "♠",
         "♥",
         "♦",
         "♣"
     ];
 
-
-    const numbers = [
-        "A",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "J",
-        "Q",
-        "K"
+    const nums=[
+        "A","2","3","4","5","6",
+        "7","8","9","10","J","Q","K"
     ];
 
-
-    const suit =
+    const suit=
         suits[
             Math.floor(
-                Math.random() *
-                suits.length
+                Math.random()*suits.length
             )
         ];
 
-
-    const number =
-        numbers[
+    const num=
+        nums[
             Math.floor(
-                Math.random() *
-                numbers.length
+                Math.random()*nums.length
             )
         ];
 
+    const value=num+suit;
 
-    const card =
-        document.getElementById(
-            "card"
-        );
-
-
-    card.textContent =
-        number + suit;
-
+    document.getElementById("card")
+        .textContent=value;
 
     document.getElementById(
         "cardResult"
-    ).textContent =
-        "🃏 카드가 나왔어!";
+    ).textContent=
+        "카드를 뽑았어!";
+
+    showResultPopup(
+        value,
+        "랜덤 카드가 선택됐어!",
+        "🃏",
+        "CARD RESULT"
+    );
 }
 
 
@@ -2152,122 +3896,2323 @@ function drawCard(){
    TARGET
 ===================================================== */
 
-let targetTimer = null;
-
-let targetHits = 0;
-
+let targetActive=false;
+let targetHits=0;
+let targetTimer=null;
 
 function startTarget(){
 
-    clearTimeout(
-        targetTimer
-    );
+    targetHits=0;
+    targetActive=true;
 
+    const target=
+        document.getElementById("target");
 
-    targetHits = 0;
+    const area=
+        document.getElementById("targetArea");
 
+    target.style.display="block";
 
-    const target =
-        document.getElementById(
-            "target"
-        );
-
-
-    const result =
-        document.getElementById(
-            "targetResult"
-        );
-
-
-    target.style.display =
-        "block";
-
-
-    result.textContent =
-        "⚡ 빨리 눌러!";
-
+    document.getElementById(
+        "targetResult"
+    ).textContent=
+        "빠르게 눌러!";
 
     moveTarget();
 
+    clearTimeout(targetTimer);
 
-    targetTimer =
+    targetTimer=
         setTimeout(()=>{
 
-            target.style.display =
-                "none";
+            targetActive=false;
 
+            target.style.display="none";
 
-            result.textContent =
-                "⚡ " +
-                targetHits +
-                "개 성공!";
+            document.getElementById(
+                "targetResult"
+            ).textContent=
+                `종료! ${targetHits}회 성공`;
+
+            showResultPopup(
+                targetHits+"회",
+                "타깃을 맞힌 횟수",
+                "⚡",
+                "TARGET RESULT"
+            );
 
         },10000);
 }
 
-
 function moveTarget(){
 
-    const area =
-        document.getElementById(
-            "targetArea"
-        );
+    if(!targetActive)return;
 
+    const target=
+        document.getElementById("target");
 
-    const target =
-        document.getElementById(
-            "target"
-        );
+    const area=
+        document.getElementById("targetArea");
 
+    const maxX=
+        area.clientWidth-
+        target.offsetWidth;
 
-    const maxX =
-        area.clientWidth - 55;
+    const maxY=
+        area.clientHeight-
+        target.offsetHeight;
 
+    target.style.left=
+        Math.random()*maxX+"px";
 
-    const maxY =
-        area.clientHeight - 55;
-
-
-    target.style.left =
-        Math.random() *
-        maxX +
-        "px";
-
-
-    target.style.top =
-        Math.random() *
-        maxY +
-        "px";
+    target.style.top=
+        Math.random()*maxY+"px";
 }
-
 
 function hitTarget(){
 
-    const target =
+    if(!targetActive)return;
+
+    targetHits++;
+
+    document.getElementById(
+        "targetResult"
+    ).textContent=
+        targetHits+"회 성공!";
+
+    moveTarget();
+
+    playTone(500+targetHits*25,.07);
+}
+
+
+/* =====================================================
+   MATCHING
+===================================================== */
+
+let matchFirst=null;
+let matchSecond=null;
+let matchLock=false;
+let matchDone=0;
+
+function startMatching(){
+
+    const text=
         document.getElementById(
-            "target"
+            "matchWords"
+        ).value;
+
+    let words=
+        text
+            .split(/[,\n]/)
+            .map(x=>x.trim())
+            .filter(Boolean);
+
+    words=[
+        ...new Set(words)
+    ].slice(0,10);
+
+    if(words.length<2){
+
+        alert("단어를 2개 이상 입력해줘.");
+
+        return;
+    }
+
+    const cards=
+        [...words,...words]
+            .sort(
+                ()=>Math.random()-.5
+            );
+
+    const grid=
+        document.getElementById(
+            "matchGrid"
         );
 
+    grid.innerHTML="";
+
+    matchFirst=null;
+    matchSecond=null;
+    matchLock=false;
+    matchDone=0;
+
+    cards.forEach((word,i)=>{
+
+        const button=
+            document.createElement("button");
+
+        button.className="match-card";
+
+        button.textContent="?";
+
+        button.dataset.word=word;
+        button.dataset.index=i;
+
+        button.onclick=()=>flipMatch(button);
+
+        grid.appendChild(button);
+
+    });
+
+    document.getElementById(
+        "matchInfo"
+    ).textContent=
+        `${words.length}쌍 준비 완료!`;
+}
+
+function flipMatch(card){
 
     if(
-        target.style.display !== "block"
+        matchLock ||
+        card.classList.contains("matched") ||
+        card===matchFirst
     ){
         return;
     }
 
+    card.classList.add("open");
 
-    targetHits++;
+    card.textContent=
+        card.dataset.word;
 
+    if(!matchFirst){
+
+        matchFirst=card;
+
+        return;
+    }
+
+    matchSecond=card;
+
+    matchLock=true;
+
+    if(
+        matchFirst.dataset.word===
+        matchSecond.dataset.word
+    ){
+
+        matchFirst.classList.add("matched");
+        matchSecond.classList.add("matched");
+
+        matchDone++;
+
+        matchFirst=null;
+        matchSecond=null;
+        matchLock=false;
+
+        const total=
+            document.querySelectorAll(
+                ".match-card"
+            ).length/2;
+
+        if(matchDone===total){
+
+            showResultPopup(
+                "완료!",
+                "모든 단어 짝을 맞췄어!",
+                "🃏",
+                "MATCH RESULT"
+            );
+        }
+
+    }else{
+
+        setTimeout(()=>{
+
+            matchFirst.classList.remove("open");
+            matchSecond.classList.remove("open");
+
+            matchFirst.textContent="?";
+            matchSecond.textContent="?";
+
+            matchFirst=null;
+            matchSecond=null;
+            matchLock=false;
+
+        },800);
+    }
+}
+
+
+/* =====================================================
+   OMOK
+===================================================== */
+
+let omok=[];
+let omokTurn=1;
+let omokOver=false;
+
+function resetOmok(){
+
+    omok=
+        Array.from(
+            {length:15},
+            ()=>Array(15).fill(0)
+        );
+
+    omokTurn=1;
+    omokOver=false;
+
+    const board=
+        document.getElementById(
+            "omokBoard"
+        );
+
+    board.innerHTML="";
+
+    for(let r=0;r<15;r++){
+
+        for(let c=0;c<15;c++){
+
+            const cell=
+                document.createElement("div");
+
+            cell.className="board-cell";
+
+            cell.onclick=()=>{
+                playOmok(r,c,cell);
+            };
+
+            board.appendChild(cell);
+        }
+    }
 
     document.getElementById(
-        "targetResult"
-    ).textContent =
-        "⚡ " +
-        targetHits +
-        "개!";
+        "omokTurn"
+    ).textContent=
+        "⚫ 흑 차례";
+}
+
+function playOmok(r,c,cell){
+
+    if(
+        omokOver ||
+        omok[r][c]
+    ){
+        return;
+    }
+
+    omok[r][c]=omokTurn;
+
+    cell.classList.add(
+        omokTurn===1
+            ? "stone-black"
+            : "stone-white"
+    );
+
+    if(checkOmok(r,c)){
+
+        omokOver=true;
+
+        const winner=
+            omokTurn===1
+                ? "⚫ 흑"
+                : "⚪ 백";
+
+        document.getElementById(
+            "omokTurn"
+        ).textContent=
+            winner+" 승리!";
+
+        showResultPopup(
+            winner,
+            "5목 완성!",
+            "⚫",
+            "OMOK RESULT"
+        );
+
+        return;
+    }
+
+    omokTurn=
+        omokTurn===1
+            ? 2
+            : 1;
+
+    document.getElementById(
+        "omokTurn"
+    ).textContent=
+        omokTurn===1
+            ? "⚫ 흑 차례"
+            : "⚪ 백 차례";
+}
+
+function checkOmok(r,c){
+
+    const color=
+        omok[r][c];
+
+    const dirs=[
+        [1,0],
+        [0,1],
+        [1,1],
+        [1,-1]
+    ];
+
+    for(const [dr,dc] of dirs){
+
+        let count=1;
+
+        for(
+            let k=1;
+            k<5;
+            k++
+        ){
+
+            const nr=r+dr*k;
+            const nc=c+dc*k;
+
+            if(
+                nr<0 ||
+                nr>=15 ||
+                nc<0 ||
+                nc>=15 ||
+                omok[nr][nc]!==color
+            ){
+                break;
+            }
+
+            count++;
+        }
+
+        for(
+            let k=1;
+            k<5;
+            k++
+        ){
+
+            const nr=r-dr*k;
+            const nc=c-dc*k;
+
+            if(
+                nr<0 ||
+                nr>=15 ||
+                nc<0 ||
+                nc>=15 ||
+                omok[nr][nc]!==color
+            ){
+                break;
+            }
+
+            count++;
+        }
+
+        if(count>=5)return true;
+    }
+
+    return false;
+}
 
 
-    moveTarget();
+/* =====================================================
+   BADUK
+===================================================== */
+
+let baduk=[];
+let badukTurn=1;
+let badukCaptures=[0,0];
+
+function resetBaduk(){
+
+    baduk=
+        Array.from(
+            {length:9},
+            ()=>Array(9).fill(0)
+        );
+
+    badukTurn=1;
+    badukCaptures=[0,0];
+
+    const board=
+        document.getElementById(
+            "badukBoard"
+        );
+
+    board.innerHTML="";
+
+    for(let r=0;r<9;r++){
+
+        for(let c=0;c<9;c++){
+
+            const cell=
+                document.createElement("div");
+
+            cell.className="board-cell";
+
+            cell.onclick=()=>{
+                playBaduk(r,c);
+            };
+
+            board.appendChild(cell);
+        }
+    }
+
+    updateBadukText();
+}
+
+function getGroup(board,r,c){
+
+    const color=board[r][c];
+
+    if(!color)return null;
+
+    const stones=[];
+    const stack=[[r,c]];
+    const seen=new Set();
+
+    while(stack.length){
+
+        const [cr,cc]=stack.pop();
+
+        const key=
+            cr+","+cc;
+
+        if(seen.has(key))continue;
+
+        seen.add(key);
+
+        if(
+            cr<0 ||
+            cr>=9 ||
+            cc<0 ||
+            cc>=9 ||
+            board[cr][cc]!==color
+        ){
+            continue;
+        }
+
+        stones.push([cr,cc]);
+
+        stack.push(
+            [cr+1,cc],
+            [cr-1,cc],
+            [cr,cc+1],
+            [cr,cc-1]
+        );
+    }
+
+    const liberties=new Set();
+
+    stones.forEach(([sr,sc])=>{
+
+        [
+            [sr+1,sc],
+            [sr-1,sc],
+            [sr,sc+1],
+            [sr,sc-1]
+        ].forEach(([nr,nc])=>{
+
+            if(
+                nr>=0 &&
+                nr<9 &&
+                nc>=0 &&
+                nc<9 &&
+                board[nr][nc]===0
+            ){
+                liberties.add(
+                    nr+","+nc
+                );
+            }
+        });
+    });
+
+    return {
+        stones,
+        liberties
+    };
+}
+
+function playBaduk(r,c){
+
+    if(baduk[r][c])return;
+
+    const test=
+        baduk.map(row=>row.slice());
+
+    test[r][c]=badukTurn;
+
+    const opponent=
+        badukTurn===1
+            ? 2
+            : 1;
+
+    let captured=0;
+
+    [
+        [r+1,c],
+        [r-1,c],
+        [r,c+1],
+        [r,c-1]
+    ].forEach(([nr,nc])=>{
+
+        if(
+            nr>=0 &&
+            nr<9 &&
+            nc>=0 &&
+            nc<9 &&
+            test[nr][nc]===opponent
+        ){
+
+            const group=
+                getGroup(
+                    test,
+                    nr,
+                    nc
+                );
+
+            if(
+                group &&
+                group.liberties.size===0
+            ){
+
+                group.stones.forEach(
+                    ([gr,gc])=>{
+                        test[gr][gc]=0;
+                    }
+                );
+
+                captured+=
+                    group.stones.length;
+            }
+        }
+    });
+
+    const ownGroup=
+        getGroup(
+            test,
+            r,
+            c
+        );
+
+    /*
+        기본적인 자살수 방지
+    */
+
+    if(
+        ownGroup &&
+        ownGroup.liberties.size===0 &&
+        captured===0
+    ){
+        return;
+    }
+
+    baduk=test;
+
+    badukCaptures[
+        badukTurn-1
+    ]+=captured;
+
+    badukTurn=
+        badukTurn===1
+            ? 2
+            : 1;
+
+    renderBaduk();
+    updateBadukText();
+}
+
+function renderBaduk(){
+
+    const cells=
+        document.querySelectorAll(
+            "#badukBoard .board-cell"
+        );
+
+    let index=0;
+
+    for(let r=0;r<9;r++){
+
+        for(let c=0;c<9;c++){
+
+            const cell=cells[index++];
+
+            cell.classList.remove(
+                "stone-black",
+                "stone-white"
+            );
+
+            if(baduk[r][c]===1){
+                cell.classList.add(
+                    "stone-black"
+                );
+            }
+
+            if(baduk[r][c]===2){
+                cell.classList.add(
+                    "stone-white"
+                );
+            }
+        }
+    }
+}
+
+function updateBadukText(){
+
+    document.getElementById(
+        "badukTurn"
+    ).textContent=
+        badukTurn===1
+            ? "⚫ 흑 차례"
+            : "⚪ 백 차례";
+
+    document.getElementById(
+        "badukScore"
+    ).textContent=
+        `잡은 돌 — 흑: ${badukCaptures[0]} / 백: ${badukCaptures[1]}`;
+}
+
+
+/* =====================================================
+   JANGGI
+===================================================== */
+
+let janggi=[];
+let janggiTurn="red";
+let janggiSelected=null;
+
+const janggiInitial=[
+    ["r","h","e","a","g","a","e","h","r"],
+    [0,0,0,0,0,0,0,0,0],
+    [0,"p",0,0,0,0,0,"p",0],
+    ["s",0,"s",0,"s",0,"s",0,"s"],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    ["S",0,"S",0,"S",0,"S",0,"S"],
+    [0,"P",0,0,0,0,0,"P",0],
+    [0,0,0,0,0,0,0,0,0],
+    ["R","H","E","A","G","A","E","H","R"]
+];
+
+const janggiNames={
+    r:"車",
+    h:"馬",
+    e:"象",
+    a:"士",
+    g:"將",
+    p:"包",
+    s:"卒",
+
+    R:"車",
+    H:"馬",
+    E:"象",
+    A:"士",
+    G:"帥",
+    P:"包",
+    S:"兵"
+};
+
+function resetJanggi(){
+
+    janggi=
+        janggiInitial.map(
+            row=>row.slice()
+        );
+
+    janggiTurn="red";
+    janggiSelected=null;
+
+    renderJanggi();
+}
+
+function isRedPiece(piece){
+
+    return piece &&
+        piece===piece.toUpperCase();
+}
+
+function janggiOwner(piece){
+
+    if(!piece)return null;
+
+    return isRedPiece(piece)
+        ? "red"
+        : "blue";
+}
+
+function renderJanggi(){
+
+    const board=
+        document.getElementById(
+            "janggiBoard"
+        );
+
+    board.innerHTML="";
+
+    for(let r=0;r<10;r++){
+
+        for(let c=0;c<9;c++){
+
+            const cell=
+                document.createElement("div");
+
+            cell.className=
+                "janggi-cell";
+
+            if(
+                janggiSelected &&
+                janggiSelected.r===r &&
+                janggiSelected.c===c
+            ){
+
+                cell.style.boxShadow=
+                    "inset 0 0 0 4px #5ff7ff";
+            }
+
+            const piece=
+                janggi[r][c];
+
+            if(piece){
+
+                const p=
+                    document.createElement("div");
+
+                p.className=
+                    "janggi-piece "+
+                    (
+                        isRedPiece(piece)
+                            ? "red-piece"
+                            : "blue-piece"
+                    );
+
+                p.textContent=
+                    janggiNames[piece];
+
+                cell.appendChild(p);
+            }
+
+            cell.onclick=()=>{
+                playJanggi(r,c);
+            };
+
+            board.appendChild(cell);
+        }
+    }
+
+    document.getElementById(
+        "janggiTurn"
+    ).textContent=
+        janggiTurn==="red"
+            ? "🔴 초 차례"
+            : "🔵 한 차례";
+}
+
+function insideJanggi(r,c){
+
+    return (
+        r>=0 &&
+        r<10 &&
+        c>=0 &&
+        c<9
+    );
+}
+
+function pathClear(
+    r1,c1,r2,c2
+){
+
+    const dr=
+        Math.sign(r2-r1);
+
+    const dc=
+        Math.sign(c2-c1);
+
+    let r=r1+dr;
+    let c=c1+dc;
+
+    while(
+        r!==r2 ||
+        c!==c2
+    ){
+
+        if(janggi[r][c]){
+            return false;
+        }
+
+        r+=dr;
+        c+=dc;
+    }
+
+    return true;
+}
+
+function validJanggiMove(
+    r1,c1,r2,c2
+){
+
+    if(!insideJanggi(r2,c2)){
+        return false;
+    }
+
+    const piece=
+        janggi[r1][c1];
+
+    if(!piece)return false;
+
+    const target=
+        janggi[r2][c2];
+
+    if(
+        target &&
+        janggiOwner(target)===
+        janggiOwner(piece)
+    ){
+        return false;
+    }
+
+    const type=
+        piece.toLowerCase();
+
+    const dr=
+        r2-r1;
+
+    const dc=
+        c2-c1;
+
+    /*
+        車
+    */
+
+    if(type==="r"){
+
+        if(dr!==0 && dc!==0)return false;
+
+        return pathClear(
+            r1,c1,r2,c2
+        );
+    }
+
+    /*
+        馬
+    */
+
+    if(type==="h"){
+
+        const moves=[
+            [-2,-1],
+            [-2,1],
+            [2,-1],
+            [2,1],
+            [-1,-2],
+            [1,-2],
+            [-1,2],
+            [1,2]
+        ];
+
+        const ok=
+            moves.some(
+                ([a,b])=>
+                    dr===a &&
+                    dc===b
+            );
+
+        if(!ok)return false;
+
+        /*
+            말의 다리
+        */
+
+        if(Math.abs(dr)===2){
+
+            const blockR=
+                r1+dr/2;
+
+            if(janggi[blockR][c1]){
+                return false;
+            }
+
+        }else{
+
+            const blockC=
+                c1+dc/2;
+
+            if(janggi[r1][blockC]){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /*
+        象
+    */
+
+    if(type==="e"){
+
+        if(
+            Math.abs(dr)!==2 ||
+            Math.abs(dc)!==3 &&
+            Math.abs(dr)!==3
+        ){
+            /*
+                장기 상 이동은
+                대각 3+2 형태
+            */
+        }
+
+        const moves=[
+            [-3,-2],
+            [-3,2],
+            [3,-2],
+            [3,2],
+            [-2,-3],
+            [-2,3],
+            [2,-3],
+            [2,3]
+        ];
+
+        const ok=
+            moves.some(
+                ([a,b])=>
+                    dr===a &&
+                    dc===b
+            );
+
+        if(!ok)return false;
+
+        const sr=
+            r1+Math.sign(dr);
+
+        const sc=
+            c1+Math.sign(dc);
+
+        if(janggi[sr][sc]){
+            return false;
+        }
+
+        const sr2=
+            r1+Math.sign(dr)*2;
+
+        const sc2=
+            c1+Math.sign(dc)*2;
+
+        if(janggi[sr2][sc2]){
+            return false;
+        }
+
+        return true;
+    }
+
+    /*
+        士 / 將 / 帥
+        궁성 안에서 1칸 대각선/직선
+    */
+
+    if(
+        type==="a" ||
+        type==="g"
+    ){
+
+        if(
+            Math.abs(dr)>1 ||
+            Math.abs(dc)>1
+        ){
+            return false;
+        }
+
+        return true;
+    }
+
+    /*
+        卒 / 兵
+    */
+
+    if(type==="s"){
+
+        const red=
+            isRedPiece(piece);
+
+        const forward=
+            red ? -1 : 1;
+
+        if(
+            dr===forward &&
+            Math.abs(dc)<=1
+        ){
+            return true;
+        }
+
+        /*
+            좌우 이동
+        */
+
+        if(
+            dr===0 &&
+            Math.abs(dc)===1
+        ){
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+        包
+    */
+
+    if(type==="p"){
+
+        if(
+            dr!==0 &&
+            dc!==0
+        ){
+            return false;
+        }
+
+        let count=0;
+
+        const sr=Math.sign(dr);
+        const sc=Math.sign(dc);
+
+        let r=r1+sr;
+        let c=c1+sc;
+
+        while(
+            r!==r2 ||
+            c!==c2
+        ){
+
+            if(janggi[r][c])count++;
+
+            r+=sr;
+            c+=sc;
+        }
+
+        if(!target){
+
+            return count===1;
+
+        }else{
+
+            return count===1 &&
+                target.toLowerCase()!=="p";
+        }
+    }
+
+    return false;
+}
+
+function playJanggi(r,c){
+
+    const piece=
+        janggi[r][c];
+
+    if(!janggiSelected){
+
+        if(
+            piece &&
+            janggiOwner(piece)===
+            janggiTurn
+        ){
+
+            janggiSelected={
+                r,
+                c
+            };
+
+            renderJanggi();
+        }
+
+        return;
+    }
+
+    const sr=
+        janggiSelected.r;
+
+    const sc=
+        janggiSelected.c;
+
+    if(
+        sr===r &&
+        sc===c
+    ){
+
+        janggiSelected=null;
+
+        renderJanggi();
+
+        return;
+    }
+
+    if(
+        validJanggiMove(
+            sr,
+            sc,
+            r,
+            c
+        )
+    ){
+
+        const moving=
+            janggi[sr][sc];
+
+        const captured=
+            janggi[r][c];
+
+        janggi[r][c]=moving;
+        janggi[sr][sc]=0;
+
+        janggiSelected=null;
+
+        if(
+            captured &&
+            captured.toLowerCase()==="g"
+        ){
+
+            renderJanggi();
+
+            showResultPopup(
+                janggiTurn==="red"
+                    ? "초 승리!"
+                    : "한 승리!",
+                "상대 장군을 잡았습니다.",
+                "♟️",
+                "JANGGI RESULT"
+            );
+
+            return;
+        }
+
+        janggiTurn=
+            janggiTurn==="red"
+                ? "blue"
+                : "red";
+
+        renderJanggi();
+
+    }else{
+
+        /*
+            다른 자기 기물을 선택
+        */
+
+        if(
+            piece &&
+            janggiOwner(piece)===
+            janggiTurn
+        ){
+
+            janggiSelected={
+                r,
+                c
+            };
+
+            renderJanggi();
+        }
+    }
+}
+
+
+/* =====================================================
+   MARBLE ROULETTE
+===================================================== */
+
+const maps=[
+    {
+        name:"🌋 용암 낮",
+        theme:"theme-lava",
+        traps:[
+            "🌋 용암 분출",
+            "🪨 돌 굴러오기",
+            "🔥 불길",
+            "💥 화산 폭발"
+        ]
+    },
+    {
+        name:"🌋 용암 밤",
+        theme:"theme-lava",
+        traps:[
+            "🌑 어두운 용암",
+            "🔥 불기둥",
+            "🌋 지반 붕괴",
+            "💨 연기"
+        ]
+    },
+    {
+        name:"🌊 바다 낮",
+        theme:"theme-sea",
+        traps:[
+            "🌊 파도",
+            "🌀 소용돌이",
+            "🐙 문어",
+            "💦 물살"
+        ]
+    },
+    {
+        name:"🌊 바다 밤",
+        theme:"theme-sea",
+        traps:[
+            "🌑 암흑 해류",
+            "🌀 거대 소용돌이",
+            "🐋 돌진",
+            "🌊 폭풍"
+        ]
+    },
+    {
+        name:"❄️ 얼음 낮",
+        theme:"theme-ice",
+        traps:[
+            "🧊 얼음 미끄럼",
+            "❄️ 눈보라",
+            "💎 얼음벽",
+            "🥶 동결"
+        ]
+    },
+    {
+        name:"❄️ 얼음 밤",
+        theme:"theme-ice",
+        traps:[
+            "🌑 얼음 어둠",
+            "🧊 빙판 붕괴",
+            "❄️ 극한 눈보라",
+            "💨 미끄러운 바람"
+        ]
+    },
+    {
+        name:"🌲 숲 낮",
+        theme:"theme-forest",
+        traps:[
+            "🌳 나뭇가지",
+            "🕸️ 거미줄",
+            "🪵 통나무",
+            "🍃 미끄러운 잎"
+        ]
+    },
+    {
+        name:"🌲 숲 밤",
+        theme:"theme-forest",
+        traps:[
+            "🌑 어두운 숲",
+            "🕷️ 거미",
+            "🌲 쓰러지는 나무",
+            "🐺 늑대"
+        ]
+    },
+    {
+        name:"🌋🌊 혼합 낮",
+        theme:"theme-lava",
+        traps:[
+            "🌋 용암 + 파도",
+            "🌀 물살",
+            "🔥 증기",
+            "🪨 낙석"
+        ]
+    },
+    {
+        name:"🌲❄️ 혼합 밤",
+        theme:"theme-ice",
+        traps:[
+            "❄️ 얼음숲",
+            "🌑 암흑",
+            "🧊 빙판",
+            "🌲 나무 함정"
+        ]
+    }
+];
+
+let currentMap=0;
+let marblePosition=10;
+
+function createMapButtons(){
+
+    const box=
+        document.getElementById(
+            "mapButtons"
+        );
+
+    box.innerHTML="";
+
+    maps.forEach((map,i)=>{
+
+        const button=
+            document.createElement("button");
+
+        button.className="map-btn";
+
+        button.textContent=
+            `${i+1}번 ${map.name}`;
+
+        button.onclick=()=>{
+            selectMap(i);
+        };
+
+        box.appendChild(button);
+    });
+}
+
+function selectMap(i){
+
+    currentMap=i;
+
+    document
+        .querySelectorAll(".map-btn")
+        .forEach(
+            (b,index)=>{
+                b.classList.toggle(
+                    "active",
+                    index===i
+                );
+            }
+        );
+
+    const map=maps[i];
+
+    const board=
+        document.getElementById(
+            "marbleMap"
+        );
+
+    board.className=
+        "marble-map "+
+        map.theme;
+
+    const trapBox=
+        document.getElementById(
+            "marbleTraps"
+        );
+
+    trapBox.innerHTML="";
+
+    map.traps.forEach(
+        (trap,i)=>{
+
+            const div=
+                document.createElement("div");
+
+            div.className="trap";
+
+            div.textContent=
+                `${i+1}번 ${trap}`;
+
+            div.style.left=
+                (18+i*20)+"%";
+
+            div.style.top=
+                (28+(i%2)*32)+"%";
+
+            trapBox.appendChild(div);
+        }
+    );
+
+    document.getElementById(
+        "marbleStatus"
+    ).textContent=
+        `${i+1}번 ${map.name} 선택됨`;
+}
+
+function startMarble(){
+
+    const ball=
+        document.getElementById(
+            "marbleBall"
+        );
+
+    const status=
+        document.getElementById(
+            "marbleStatus"
+        );
+
+    let step=0;
+
+    marblePosition=10;
+
+    status.textContent=
+        "🎲 마블 출발!";
+
+    const timer=
+        setInterval(()=>{
+
+            step++;
+
+            marblePosition=
+                Math.min(
+                    88,
+                    marblePosition+
+                    6+
+                    Math.random()*9
+                );
+
+            ball.style.left=
+                marblePosition+"%";
+
+            if(
+                Math.random()<.25
+            ){
+
+                const trap=
+                    maps[currentMap].traps[
+                        Math.floor(
+                            Math.random()*
+                            maps[currentMap].traps.length
+                        )
+                    ];
+
+                status.textContent=
+                    "⚠️ "+trap;
+
+            }
+
+            if(step>=8){
+
+                clearInterval(timer);
+
+                const trap=
+                    maps[currentMap].traps[
+                        Math.floor(
+                            Math.random()*
+                            maps[currentMap].traps.length
+                        )
+                    ];
+
+                status.textContent=
+                    "💥 "+trap+" 발동!";
+
+                setTimeout(()=>{
+
+                    showResultPopup(
+                        "함정!",
+                        trap,
+                        "🌍",
+                        `${currentMap+1}번 맵`
+                    );
+
+                },700);
+
+            }
+
+        },700);
+}
+
+
+/* =====================================================
+   ROCKET
+===================================================== */
+
+function makeRocketInputs(){
+
+    const count=
+        Math.max(
+            2,
+            Math.min(
+                30,
+                Number(
+                    document.getElementById(
+                        "rocketCount"
+                    ).value
+                )||10
+            )
+        );
+
+    document.getElementById(
+        "rocketCount"
+    ).value=count;
+
+    const box=
+        document.getElementById(
+            "rocketInputs"
+        );
+
+    box.innerHTML="";
+
+    for(let i=1;i<=count;i++){
+
+        const input=
+            document.createElement("input");
+
+        input.placeholder=
+            `${i}번 이름`;
+
+        input.value=
+            `${i}번`;
+
+        input.dataset.index=i;
+
+        input.style.marginTop="7px";
+
+        box.appendChild(input);
+    }
+}
+
+function launchRocket(){
+
+    const inputs=
+        [
+            ...document.querySelectorAll(
+                "#rocketInputs input"
+            )
+        ];
+
+    if(!inputs.length){
+        makeRocketInputs();
+        return;
+    }
+
+    const winnerIndex=
+        Math.floor(
+            Math.random()*
+            inputs.length
+        );
+
+    const winner=
+        inputs[winnerIndex].value ||
+        `${winnerIndex+1}번`;
+
+    const rocket=
+        document.getElementById(
+            "rocket"
+        );
+
+    rocket.style.bottom="380px";
+
+    document.getElementById(
+        "rocketStage"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+    setTimeout(()=>{
+
+        showResultPopup(
+            `${winnerIndex+1}번`,
+            `${winner} 발표자로 선정!`,
+            "🚀",
+            "PRESENTER RESULT"
+        );
+
+        rocket.style.bottom="30px";
+
+    },3200);
+}
+
+
+/* =====================================================
+   BANANA
+===================================================== */
+
+let bananaCreated=false;
+
+function createBananas(){
+
+    const count=
+        Math.max(
+            2,
+            Math.min(
+                30,
+                Number(
+                    document.getElementById(
+                        "bananaCount"
+                    ).value
+                )||10
+            )
+        );
+
+    const box=
+        document.getElementById(
+            "bananas"
+        );
+
+    box.innerHTML="";
+
+    const stage=
+        document.getElementById(
+            "bananaStage"
+        );
+
+    for(let i=1;i<=count;i++){
+
+        const b=
+            document.createElement("button");
+
+        b.className="banana";
+
+        b.textContent=
+            `🍌 ${i}번`;
+
+        const x=
+            5+
+            Math.random()*85;
+
+        const y=
+            8+
+            Math.random()*78;
+
+        b.style.left=x+"%";
+        b.style.top=y+"%";
+
+        box.appendChild(b);
+    }
+
+    bananaCreated=true;
+
+    document.getElementById(
+        "bananaStatus"
+    ).textContent=
+        `${count}개의 바나나 준비 완료!`;
+}
+
+function monkeyChoose(){
+
+    if(!bananaCreated){
+
+        createBananas();
+    }
+
+    const bananas=
+        [
+            ...document.querySelectorAll(
+                ".banana"
+            )
+        ];
+
+    const monkey=
+        document.getElementById(
+            "monkey"
+        );
+
+    const stage=
+        document.getElementById(
+            "bananaStage"
+        );
+
+    const chosen=
+        Math.floor(
+            Math.random()*
+            bananas.length
+        );
+
+    document.getElementById(
+        "bananaStatus"
+    ).textContent=
+        "🐒 음... 어디 먹지...?";
+
+    /*
+        여러 번 왔다 갔다 하면서
+        긴장감을 줌
+    */
+
+    let step=0;
+
+    const fakeTimer=
+        setInterval(()=>{
+
+            const fake=
+                Math.floor(
+                    Math.random()*
+                    bananas.length
+                );
+
+            const rect=
+                bananas[fake].getBoundingClientRect();
+
+            const srect=
+                stage.getBoundingClientRect();
+
+            monkey.style.left=
+                (
+                    rect.left-
+                    srect.left+
+                    rect.width/2
+                )+"px";
+
+            monkey.style.top=
+                (
+                    rect.top-
+                    srect.top+
+                    rect.height/2
+                )+"px";
+
+            const messages=[
+                "🐒 고민 중...",
+                "🐒 이건가?",
+                "🐒 아니야!",
+                "🐒 저쪽인가?",
+                "😱 결정 직전!",
+                "🐒 조금만 더..."
+            ];
+
+            document.getElementById(
+                "bananaStatus"
+            ).textContent=
+                messages[
+                    step%messages.length
+                ];
+
+            step++;
+
+            if(step>=8){
+
+                clearInterval(fakeTimer);
+
+                const finalRect=
+                    bananas[chosen]
+                        .getBoundingClientRect();
+
+                monkey.style.left=
+                    (
+                        finalRect.left-
+                        srect.left+
+                        finalRect.width/2
+                    )+"px";
+
+                monkey.style.top=
+                    (
+                        finalRect.top-
+                        srect.top+
+                        finalRect.height/2
+                    )+"px";
+
+                setTimeout(()=>{
+
+                    showResultPopup(
+                        `${chosen+1}번`,
+                        `${chosen+1}번 바나나를 먹었습니다!`,
+                        "🍌",
+                        "MONKEY RESULT"
+                    );
+
+                },1300);
+            }
+
+        },700);
+}
+
+
+/* =====================================================
+   LADDER
+===================================================== */
+
+let ladderData=null;
+
+function createLadder(){
+
+    const count=
+        Math.max(
+            2,
+            Math.min(
+                20,
+                Number(
+                    document.getElementById(
+                        "ladderCount"
+                    ).value
+                )||6
+            )
+        );
+
+    const board=
+        document.getElementById(
+            "ladderBoard"
+        );
+
+    board.innerHTML="";
+
+    const svg=
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "svg"
+        );
+
+    svg.classList.add("ladder-svg");
+
+    const width=1000;
+    const height=600;
+
+    svg.setAttribute(
+        "viewBox",
+        `0 0 ${width} ${height}`
+    );
+
+    /*
+        세로줄
+    */
+
+    const xs=[];
+
+    for(let i=0;i<count;i++){
+
+        const x=
+            60+
+            i*
+            (
+                (width-120)/
+                (count-1)
+            );
+
+        xs.push(x);
+
+        const line=
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "line"
+            );
+
+        line.setAttribute("x1",x);
+        line.setAttribute("x2",x);
+        line.setAttribute("y1",50);
+        line.setAttribute("y2",550);
+
+        line.setAttribute(
+            "stroke",
+            "#5ff7ff"
+        );
+
+        line.setAttribute(
+            "stroke-width",
+            "3"
+        );
+
+        svg.appendChild(line);
+
+        const text=
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "text"
+            );
+
+        text.setAttribute("x",x);
+        text.setAttribute("y",30);
+        text.setAttribute(
+            "text-anchor",
+            "middle"
+        );
+
+        text.setAttribute(
+            "fill",
+            "white"
+        );
+
+        text.textContent=
+            `${i+1}번`;
+
+        svg.appendChild(text);
+    }
+
+    /*
+        가로줄
+    */
+
+    ladderData=[];
+
+    for(let y=90;y<530;y+=45){
+
+        for(let i=0;i<count-1;i++){
+
+            if(
+                Math.random()<.45
+            ){
+
+                const line=
+                    document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "line"
+                    );
+
+                line.setAttribute(
+                    "x1",
+                    xs[i]
+                );
+
+                line.setAttribute(
+                    "x2",
+                    xs[i+1]
+                );
+
+                line.setAttribute(
+                    "y1",
+                    y
+                );
+
+                line.setAttribute(
+                    "y2",
+                    y
+                );
+
+                line.setAttribute(
+                    "stroke",
+                    "#ffd85c"
+                );
+
+                line.setAttribute(
+                    "stroke-width",
+                    "4"
+                );
+
+                svg.appendChild(line);
+
+                ladderData.push({
+                    y,
+                    a:i,
+                    b:i+1
+                });
+
+                i++;
+            }
+        }
+    }
+
+    board.appendChild(svg);
+
+    document.getElementById(
+        "ladderBoard"
+    ).dataset.count=count;
+}
+
+function runLadder(){
+
+    if(!ladderData){
+
+        createLadder();
+    }
+
+    const count=
+        Number(
+            document.getElementById(
+                "ladderBoard"
+            ).dataset.count
+        )||6;
+
+    const start=
+        Math.floor(
+            Math.random()*count
+        );
+
+    /*
+        실제 사다리 이동 계산
+    */
+
+    let position=start;
+
+    ladderData
+        .slice()
+        .sort(
+            (a,b)=>a.y-b.y
+        )
+        .forEach(r=>{
+
+            if(r.a===position){
+                position=r.b;
+            }else if(r.b===position){
+                position=r.a;
+            }
+        });
+
+    showResultPopup(
+        `${position+1}번`,
+        `${start+1}번에서 출발해서 ${position+1}번에 도착!`,
+        "🪜",
+        "LADDER RESULT"
+    );
+}
+
+
+/* =====================================================
+   LOTTERY
+===================================================== */
+
+function createLottery(){
+
+    const count=
+        Math.max(
+            2,
+            Math.min(
+                50,
+                Number(
+                    document.getElementById(
+                        "lotteryCount"
+                    ).value
+                )||10
+            )
+        );
+
+    const grid=
+        document.getElementById(
+            "lotteryGrid"
+        );
+
+    grid.innerHTML="";
+
+    for(let i=1;i<=count;i++){
+
+        const button=
+            document.createElement("button");
+
+        button.className="pick-box";
+
+        button.textContent="🎟️";
+
+        button.onclick=()=>{
+
+            const chosen=i;
+
+            button.textContent="✨";
+
+            showResultPopup(
+                `${chosen}번`,
+                `${chosen}번 제비가 당첨!`,
+                "🎟️",
+                "LOTTERY RESULT"
+            );
+        };
+
+        grid.appendChild(button);
+    }
+}
+
+
+/* =====================================================
+   BOX
+===================================================== */
+
+function createBoxes(){
+
+    const count=
+        Math.max(
+            2,
+            Math.min(
+                50,
+                Number(
+                    document.getElementById(
+                        "boxCount"
+                    ).value
+                )||12
+            )
+        );
+
+    const grid=
+        document.getElementById(
+            "boxGrid"
+        );
+
+    grid.innerHTML="";
+
+    for(let i=1;i<=count;i++){
+
+        const button=
+            document.createElement("button");
+
+        button.className="pick-box";
+
+        button.textContent="📦";
+
+        button.onclick=()=>{
+
+            button.textContent="💥";
+
+            showResultPopup(
+                `${i}번`,
+                `${i}번 상자가 선택됐어!`,
+                "📦",
+                "BOX RESULT"
+            );
+        };
+
+        grid.appendChild(button);
+    }
+}
+
+
+/* =====================================================
+   NUMBER DRAW
+===================================================== */
+
+function drawNumbers(){
+
+    const max=
+        Math.max(
+            2,
+            Number(
+                document.getElementById(
+                    "numberMax"
+                ).value
+            )||30
+        );
+
+    const times=
+        Math.max(
+            1,
+            Math.min(
+                20,
+                Number(
+                    document.getElementById(
+                        "numberTimes"
+                    ).value
+                )||5
+            )
+        );
+
+    const result=[];
+
+    while(result.length<times){
+
+        const n=
+            Math.floor(
+                Math.random()*max
+            )+1;
+
+        if(!result.includes(n)){
+            result.push(n);
+        }
+
+        /*
+            횟수가 최대 번호보다 크면
+            중복 허용으로 변경
+        */
+
+        if(
+            times>max
+        ){
+            break;
+        }
+    }
+
+    if(times>max){
+
+        result.length=0;
+
+        for(let i=0;i<times;i++){
+
+            result.push(
+                Math.floor(
+                    Math.random()*max
+                )+1
+            );
+        }
+    }
+
+    const box=
+        document.getElementById(
+            "numberResults"
+        );
+
+    box.innerHTML="";
+
+    result.forEach(
+        (n,i)=>{
+
+            const div=
+                document.createElement("div");
+
+            div.className="number-chip";
+
+            div.textContent=
+                `${i+1}번 → ${n}번`;
+
+            box.appendChild(div);
+        }
+    );
+
+    showResultPopup(
+        result.join(", "),
+        `${times}회 추첨 완료`,
+        "🔢",
+        "NUMBER RESULT"
+    );
+}
+
+
+/* =====================================================
+   GROUP
+===================================================== */
+
+function makeGroups(){
+
+    let members=
+        document.getElementById(
+            "groupMembers"
+        ).value
+        .split(/[,\n]/)
+        .map(x=>x.trim())
+        .filter(Boolean);
+
+    members=[
+        ...new Set(members)
+    ];
+
+    const count=
+        Math.max(
+            2,
+            Math.min(
+                20,
+                Number(
+                    document.getElementById(
+                        "groupCount"
+                    ).value
+                )||2
+            )
+        );
+
+    if(members.length<count){
+
+        alert(
+            "그룹 수보다 참가자가 많거나 같아야 해."
+        );
+
+        return;
+    }
+
+    members.sort(
+        ()=>Math.random()-.5
+    );
+
+    const groups=
+        Array.from(
+            {length:count},
+            ()=>[]
+        );
+
+    members.forEach(
+        (member,i)=>{
+            groups[
+                i%count
+            ].push(member);
+        }
+    );
+
+    const result=
+        document.getElementById(
+            "groupResult"
+        );
+
+    result.innerHTML="";
+
+    groups.forEach(
+        (group,i)=>{
+
+            const box=
+                document.createElement("div");
+
+            box.className="group-box";
+
+            box.innerHTML=
+                `<h3>${i+1}번 그룹</h3>`;
+
+            group.forEach(
+                (member,j)=>{
+
+                    const div=
+                        document.createElement("div");
+
+                    div.className=
+                        "group-member";
+
+                    div.textContent=
+                        `${j+1}번 ${member}`;
+
+                    box.appendChild(div);
+                }
+            );
+
+            result.appendChild(box);
+        }
+    );
+
+    showResultPopup(
+        `${count}개 그룹`,
+        "참가자 배정 완료!",
+        "👥",
+        "GROUP RESULT"
+    );
 }
 
 
@@ -2276,6 +6221,35 @@ function hitTarget(){
 ===================================================== */
 
 createLabels();
+
+resizeCanvas();
+
+createMapButtons();
+
+selectMap(0);
+
+makeRocketInputs();
+
+createLadder();
+
+createLottery();
+
+createBoxes();
+
+window.addEventListener(
+    "resize",
+    ()=>{
+        if(
+            !document
+                .getElementById(
+                    "roulettePage"
+                )
+                .classList.contains("hidden")
+        ){
+            resizeCanvas();
+        }
+    }
+);
 
 </script>
 
